@@ -1031,24 +1031,35 @@
       margin: 0 auto;
     }
 
-    .bs-categories h2 {
-      font-family: var(--serif);
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: var(--navy);
-      margin-bottom: 0.5rem;
+    .coffee-collection-title {
+      font-family: 'Noto Serif KR', var(--serif);
+      font-size: clamp(1.54rem, 3.5vw, 2.24rem);
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: var(--navy-dark);
+      text-align: center;
+      margin: 1.5rem 0 4rem;
+      position: relative;
+      padding-bottom: 1.75rem;
+      line-height: 1.1;
     }
 
-    body.lang-ko .bs-categories h2 {
-      font-family: var(--sans-kr);
-      font-size: 1.4rem;
+    body.lang-ko .coffee-collection-title {
+      font-style: normal;
     }
 
-    .bs-categories .subtitle {
-      font-size: 0.82rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-bottom: 3rem;
+    .coffee-collection-title::after {
+      content: '';
+      display: block;
+      width: min(420px, 70vw);
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 15%, var(--gold) 85%, transparent 100%);
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      box-shadow: 0 1px 6px rgba(193, 154, 92, 0.35);
     }
 
     .cat-grid {
@@ -1662,55 +1673,6 @@
         padding: 4rem 1.5rem;
       }
 
-      /* Image Modal */
-      .img-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.85);
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        backdrop-filter: blur(5px);
-      }
-
-      .img-modal-overlay.active {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .img-modal-content {
-        position: relative;
-        max-width: 90vw;
-        max-height: 90vh;
-      }
-
-      .img-modal-content img {
-        max-width: 100%;
-        max-height: 90vh;
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        object-fit: contain;
-      }
-
-      .img-modal-close {
-        position: absolute;
-        top: -40px;
-        right: 0;
-        color: #fff;
-        font-size: 2.5rem;
-        cursor: pointer;
-        background: none;
-        border: none;
-        line-height: 1;
-      }
-
       /* ══════════════════════════════════════════════ */
       /* RESPONSIVE (MOBILE / TABLET) */
       .qa-container {
@@ -1759,6 +1721,58 @@
         margin: 0;
         max-height: 100vh;
       }
+    }
+
+    /* ══════════════════════════════════════════════
+       PRODUCT DETAIL IMAGE MODAL (must live outside
+       any media query so it works on all viewports)
+       ══════════════════════════════════════════════ */
+    .img-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .img-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .img-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .img-modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      object-fit: contain;
+    }
+
+    .img-modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 2.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
     }
 
 
