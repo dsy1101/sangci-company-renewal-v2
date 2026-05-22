@@ -1049,27 +1049,6 @@
       font-style: normal;
     }
 
-    .coffee-collection-sub {
-      font-family: var(--sans);
-      font-size: clamp(0.95rem, 1.4vw, 1.05rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--muted);
-      text-align: center;
-      max-width: 680px;
-      margin: -2.5rem auto 3.5rem;
-      line-height: 1.7;
-      letter-spacing: 0.01em;
-    }
-
-    body.lang-ko .coffee-collection-sub {
-      font-family: var(--sans-kr);
-      font-style: normal;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      line-height: 1.75;
-    }
-
     .coffee-collection-title::after {
       content: '';
       display: block;
