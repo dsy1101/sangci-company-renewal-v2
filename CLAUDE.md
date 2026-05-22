@@ -4,65 +4,78 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Static, single-page marketing site for **Sangci Company** (Indonesia ↔ Korea trade broker). The entire site is one self-contained file: [index.html](index.html) (~4500 lines) holds the HTML, inline `<style>`, and inline `<script>` with all data, i18n, and page logic. There is no build system, no package manager, and no framework.
+Static, single-page marketing site for **Sangci Company** (Indonesia ↔ Korea trade broker). The site has no build system, no package manager, and no framework — just HTML, CSS, JS, and JSON, served as-is by Vercel.
+
+## File layout
+
+- [index.html](index.html) — page markup + the EDITING GUIDE comment for the non-developer maintainer
+- [styles.css](styles.css) — all visual styles, including `:root` design tokens
+- [js/i18n.js](js/i18n.js) — `T` object with `en` / `id` / `ko` translations
+- [js/data.js](js/data.js) — `loadData()` that fetches the three JSON files and assigns to `vlogs`, `catData`, `coffeeClones`
+- [js/app.js](js/app.js) — page switching, renderers, modal handlers, init
+- [data/journal.json](data/journal.json) — Business Journal entries (was `vlogs`)
+- [data/products.json](data/products.json) — Product category series (was `catData`)
+- [data/cultivars.json](data/cultivars.json) — Coffee cultivar catalogue (was `coffeeClones`)
 
 ## Running / previewing
 
-- Open [index.html](index.html) directly in a browser, **or**
-- Serve the directory statically, e.g. `python -m http.server 8000` then visit `http://localhost:8000/`.
-- Deployment target is Vercel. The project is linked via `.vercel/` (gitignored) and auto-deploys on push to `main` (GitHub repo: `dsy1101/sangci-company-renewal-v2`). No build step.
+Data is fetched at runtime, so `file://` direct-open no longer works (browsers block `fetch` on `file://`). Use a server:
 
-No lint, no test suite, no compile step exists. "Verifying a change" means opening the file in a browser and clicking through the three pages in all three languages.
+```
+python -m http.server 8000
+```
+
+then visit `http://localhost:8000/`. Or push to `main` and let Vercel auto-deploy (~1 min, GitHub repo `dsy1101/sangci-company-renewal-v2`).
+
+No lint, no test suite, no compile step. "Verifying a change" means running a server, opening the page, clicking through the three pages in all three languages, and checking for console errors.
 
 ## Architecture — the things you have to know to edit safely
 
-### 1. Single-file structure of `index.html`
+### 1. Async init flow
 
-The file is organized top-to-bottom as:
-1. `<head>` with Google Fonts + a large ASCII "EDITING GUIDE" comment block (lines ~12–58). **Read that comment** before structural edits — it's the source of truth for how the maintainer expects edits to be made.
-2. One giant inline `<style>` block defining everything via CSS custom properties on `:root` (`--navy`, `--gold`, `--cream`, fonts, etc.).
-3. `<body>` containing the fixed lang bar, nav, and **three page `<div>`s**: `#page-home`, `#page-seller`, `#page-vlog`. Only one has the `active` class at a time.
-4. Modals (vlog modal, product detail modal) at the bottom of `<body>`.
-5. One inline `<script>` with all data and behavior.
+`js/app.js` ends with an IIFE that `await loadData()` before calling `setLang('ko')` and the renderers. Any code that depends on `vlogs` / `catData` / `coffeeClones` must therefore run **after** that await — i.e., inside renderers or user-triggered handlers, not at script top level.
 
 ### 2. Page switching
 
-`showPage(name)` ([index.html:4415](index.html#L4415)) hides every `.page`, adds `active` to `#page-<name>`, scrolls to top, and conditionally calls `renderCatalog()` / `renderVlog(...)` / `renderHomeVlog()`. To add a page you must do **all three**: add a nav `<li>`, add a `<div class="page" id="page-XYZ">`, and add the i18n keys (see below). To remove one, remove all three.
+`showPage(name)` hides every `.page`, adds `active` to `#page-<name>`, scrolls to top, and conditionally re-runs renderers. To add a page you must do **all three**: add a nav `<li>` in `index.html`, add a `<div class="page" id="page-XYZ">` in `index.html`, and add the i18n keys in `js/i18n.js`. To remove one, remove all three.
 
 ### 3. Trilingual i18n — the `T` object
 
-The site supports `en`, `id`, `ko` with `ko` as the default ([index.html:3821](index.html#L3821), `setLang('ko')` runs on init at the bottom of the script).
+`en`, `id`, `ko` with `ko` as the default (`setLang('ko')` runs on init at the bottom of `js/app.js`).
 
-- All strings live in `const T = { en: {...}, id: {...}, ko: {...} }` starting at [index.html:3437](index.html#L3437).
-- Mark elements with `data-i18n="key"` (innerHTML) or `data-i18n-ph="key"` (placeholder). `setLang(lang)` ([index.html:3822](index.html#L3822)) walks the DOM and replaces content.
-- **When you add a new visible string, you must add the key to all three locales in `T`.** Missing keys silently fall through to whatever static HTML was already there.
-- `setLang` also toggles `body.lang-en` / `body.lang-id` / `body.lang-ko`. Korean has separate font sizing/weight rules throughout the stylesheet (search for `body.lang-ko`) because `Noto Sans KR` renders heavier than the Latin serif. **When you add or restyle a heading, add the matching `body.lang-ko` override** or Korean will look wrong.
+- All strings live in `const T = { en: {...}, id: {...}, ko: {...} }` in `js/i18n.js`.
+- Mark elements with `data-i18n="key"` (innerHTML) or `data-i18n-ph="key"` (placeholder). `setLang(lang)` walks the DOM and replaces content.
+- **When you add a new visible string, add the key to all three locales in `T`.** Missing keys silently fall through to whatever static HTML was already there.
+- `setLang` also toggles `body.lang-en` / `body.lang-id` / `body.lang-ko`. Korean has separate font sizing/weight rules throughout `styles.css` (search `body.lang-ko`) because `Noto Sans KR` renders heavier than the Latin serif. **When you add or restyle a heading, add the matching `body.lang-ko` override** or Korean will look wrong.
 
-### 4. Dynamic content arrays
+### 4. Dynamic content — JSON files
 
-Two JS arrays drive rendered grids — edit data here, not in the markup:
+The three JSON files are the source of truth for content the maintainer (or eventually the admin UI) edits. `js/data.js` is just a loader and should rarely change.
 
-- **`const vlogs = [...]`** at [index.html:3369](index.html#L3369) — Business Journal entries. Each item has `date`, `tag`, `title`/`desc` (per-locale objects), `img` (URL or `""`), `emoji` (fallback), `youtube` (embed URL or `""`). Newest entry goes at the **top** of the array. Home page shows the first 3 via `renderHomeVlog()`; the Journal page renders all via `renderVlog(filter)` filtered by `tag` (`meeting | field | factory | travel | networking`).
-- **`catData`** drives the Seller/Products catalog via `renderCategories()` / `renderCatalog()`. Items use the same per-locale shape (`{ en, id, ko }`) for `title`, `desc`, `name`, `tags`.
+- **`data/journal.json`** — Business Journal entries. Each item has `date`, `tag`, `title`/`desc` (per-locale `{ en, id, ko }` objects), `img` (URL or `""`), `emoji` (fallback), `youtube` (embed URL or `""`). Newest entry goes at the **top** of the array. Home page shows the first 3 via `renderHomeVlog()`; the Journal page renders all via `renderVlog(filter)` filtered by `tag` (`meeting | field | factory | travel | networking`).
+- **`data/products.json`** — drives the Seller/Products catalog via `renderCategories()` / `renderCatalog()`. Items use the same per-locale shape (`{ en, id, ko }`) for `title`, `desc`, `name`, `tags`.
+- **`data/cultivars.json`** — coffee cultivar catalogue used by the catalog page filter + detail modal.
+
+Edits must be **valid JSON**: double-quoted keys, no trailing commas, no JS-style comments.
 
 ### 5. Design tokens
 
-Edit colors and fonts in **one place** only: `:root` near [index.html:70](index.html#L70). Variables in use: `--navy`, `--navy-dark`, `--gold`, `--gold-light`, `--gold-pale`, `--white`, `--off-white`, `--cream`, `--muted`, `--border`, `--glass`, `--serif` (Cormorant Garamond), `--sans` (Montserrat), `--sans-kr` (Noto Sans KR).
+Edit colors and fonts in **one place**: `:root` near the top of `styles.css`. Variables in use: `--navy`, `--navy-dark`, `--gold`, `--gold-light`, `--gold-pale`, `--white`, `--off-white`, `--cream`, `--muted`, `--border`, `--glass`, `--serif` (Cormorant Garamond), `--sans` (Montserrat), `--sans-kr` (Noto Sans KR).
 
-### 6. Contact info is hard-coded
+### 6. Contact info is hard-coded in HTML
 
-Email `sangcikoreaidn@gmail.com` and phone `+82) 10-5613-0731` appear as literal strings in the HTML (not in `T`). Update with a find-and-replace across the file.
+Email `sangcikoreaidn@gmail.com` and phone `+82) 10-5613-0731` appear as literal strings in `index.html` (not in `T`). Update with a find-and-replace.
 
 ## Other files in the repo
 
-- **`incore-website_sample.html`** — an older snapshot used as the input file for the Python helper scripts below. **It is not the live site**; do not edit it expecting changes to show up. `index.html` is the live file.
-- **`index copy.html`, `index copy 2.html`, `index.html.bak`, `temp_fixed.html`** — manual backups from prior editing sessions. Ignore unless explicitly asked to diff against a prior version.
-- **`fix*.py`, `update_*.py`, `restore*.py`** — one-off Python scripts the maintainer wrote to perform bulk find-and-replace edits (translation updates, section rewrites, encoding fixes) against `incore-website_sample.html`. They are **not a build pipeline** and not part of any workflow — they're historical artifacts. Don't run them unless the user specifically asks. Don't model new changes on this pattern; edit `index.html` directly.
+- **`incore-website_sample.html`** — an older snapshot used as the input file for Python helper scripts that no longer run. **It is not the live site**; do not edit it expecting changes to show up.
+- **`index.html.bak`, `index.html.pre-split.bak`, `index copy.html`** — gitignored manual backups from prior editing sessions. Ignore unless explicitly asked to diff against a prior version.
 - **`assets/`** — images and the hero `video/hero.mp4`. Reference with relative paths from the project root.
 - **`Sangci_Company_소개자료_커피.pdf`** — Korean-language company brochure, reference material only.
 
 ## Editing conventions to follow
 
-- Edit `index.html` directly with the Edit tool. Do not introduce a build step, a bundler, external CSS/JS files, or a framework unless the user explicitly asks — the single-file design is intentional and the in-file EDITING GUIDE comment is written for a non-developer maintainer.
+- Edit the relevant file directly (HTML in `index.html`, styles in `styles.css`, etc.). The split is intentional — it lets future tooling (admin UI / CMS) edit content files without touching code.
 - When you change a visible string, update **all three** of `T.en`, `T.id`, `T.ko`. When you add a styled element, consider whether `body.lang-ko` needs an override.
-- Keep the EDITING GUIDE comment at the top of `<head>` accurate if you change structure (page IDs, vlog schema, contact-info location, color tokens).
+- Keep the EDITING GUIDE comment in `index.html`'s `<head>` accurate if you change file layout, JSON schemas, or contact info location.
+- Don't reintroduce inline `<style>` or `<script>` blocks for site logic — the single-file form is what we just moved away from.

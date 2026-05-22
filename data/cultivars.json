@@ -1,0 +1,146 @@
+[
+  {
+    "id": "bp534",
+    "name": "BP 534",
+    "country": "Indonesia",
+    "yield": "High",
+    "mucilage": "Medium",
+    "beansize": "Medium",
+    "rust": "Tolerant",
+    "disease": "Tolerant",
+    "desc": {
+      "en": "Most commonly grown clone by farmers in Indonesia; suitable for cultivation under agroforestry systems.",
+      "id": "Klon yang paling banyak ditanam oleh petani di Indonesia; cocok untuk budidaya di bawah sistem agroforestri.",
+      "ko": "인도네시아 농가에서 가장 널리 재배되는 품종입니다. 삼림 농업(아그로포레스트리) 시스템 하에서 재배하기에 매우 적합합니다."
+    },
+    "img": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "bp936",
+    "name": "BP 936",
+    "country": "Indonesia",
+    "yield": "High",
+    "mucilage": "Low",
+    "beansize": "Small",
+    "rust": "Susceptible",
+    "disease": "Tolerant",
+    "desc": {
+      "en": "Wide adaptability to different environments, with optimal productivity in areas with wet climates; suitable for modern high-yield setups.",
+      "id": "Adaptabilitas luas terhadap lingkungan yang berbeda, dengan produktivitas optimal di daerah beriklim basah; cocok untuk pengaturan hasil tinggi modern.",
+      "ko": "다양한 환경에 대한 뛰어난 적응성을 보이며, 다습한 기후 지역에서 최적의 생산성을 나타냅니다. 현대적인 다수확 재배 환경에 잘 부합합니다."
+    },
+    "img": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "bp939",
+    "name": "BP 939",
+    "country": "Indonesia",
+    "yield": "Very High",
+    "mucilage": "High",
+    "beansize": "Large",
+    "rust": "Tolerant",
+    "disease": "Resistant",
+    "desc": {
+      "en": "Wide adaptability to different environments that produces best in areas with dry climates; suitable for cultivation.",
+      "id": "Adaptabilitas luas terhadap lingkungan yang berbeda yang menghasilkan terbaik di daerah dengan iklim kering; cocok untuk budidaya.",
+      "ko": "다양한 재배지 조건에 고루 적응하며 특히 건조한 기후 지역에서 극대화된 생산성을 보입니다. 가뭄에 강한 농업을 계획하는 데 이상적입니다."
+    },
+    "img": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "brs1216",
+    "name": "BRS 1216",
+    "country": "Brazil",
+    "yield": "Very High",
+    "mucilage": "Medium",
+    "beansize": "Large",
+    "rust": "Resistant",
+    "disease": "Tolerant",
+    "desc": {
+      "en": "Adaptable to the environments of the Western Amazon with high productivity. Plant structure suitable for mechanized harvesting.",
+      "id": "Beradaptasi dengan lingkungan Amazon Barat dengan produktivitas tinggi. Struktur tanaman cocok untuk pemanenan mekanis.",
+      "ko": "서부 아마존 환경에 뛰어난 생육 적응성과 고도의 생산성을 증명했습니다. 기계 수확에 안성맞춤인 반직립형 수형 구조를 갖추고 있습니다."
+    },
+    "img": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "brs2299",
+    "name": "BRS 2299",
+    "country": "Brazil",
+    "yield": "High",
+    "mucilage": "High",
+    "beansize": "Medium",
+    "rust": "Resistant",
+    "disease": "Resistant",
+    "desc": {
+      "en": "Plant structure suitable for mechanized harvesting. Stands out for its tolerance to the root-knot nematode Meloidogyne.",
+      "id": "Struktur tanaman cocok untuk pemanenan mekanis. Menonjol karena toleransinya terhadap nematoda puru akar Meloidogyne.",
+      "ko": "기계 수확에 최적화된 가지 굵기와 형태를 지니고 있으며, 특히 뿌리혹선충(Meloidogyne)에 강력한 내성을 보유하여 토양 오염 대응력이 뛰어납니다."
+    },
+    "img": "https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "brs2314",
+    "name": "BRS 2314",
+    "country": "Brazil",
+    "yield": "High",
+    "mucilage": "High",
+    "beansize": "Large",
+    "rust": "Resistant",
+    "disease": "Resistant",
+    "desc": {
+      "en": "High cupping scores; has been classified as a 'fine robusta' with excellent cup quality and aromatic notes.",
+      "id": "Skor cupping tinggi; telah diklasifikasikan sebagai 'robusta halus' dengan kualitas cangkir dan aroma yang sangat baik.",
+      "ko": "매우 우수한 커핑 스코어를 기록하며 고품격 '파인 로부스타(Fine Robusta)' 등급으로 공인받았습니다. 깊은 단맛과 풍부한 아로마가 돋보입니다."
+    },
+    "img": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "brs2336",
+    "name": "BRS 2336",
+    "country": "Brazil",
+    "yield": "Very High",
+    "mucilage": "Medium",
+    "beansize": "Large",
+    "rust": "Resistant",
+    "disease": "Tolerant",
+    "desc": {
+      "en": "Adaptable to the environments of the Western Amazon, with high productivity and bean size. Excellent crop density performance.",
+      "id": "Beradaptasi dengan lingkungan Amazon Barat, dengan produktivitas dan ukuran biji yang tinggi. Kinerja kepadatan tanaman yang sangat baik.",
+      "ko": "서부 아마존 분지 지역의 기후 및 강우 환경에 완벽히 적응하며, 매우 굵은 생두 사이즈와 압도적인 다수확을 실현한 최신 고부가가치 품종입니다."
+    },
+    "img": "https://images.unsplash.com/photo-1524350876685-274059332603?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "brs2357",
+    "name": "BRS 2357",
+    "country": "Brazil",
+    "yield": "High",
+    "mucilage": "Low",
+    "beansize": "Medium",
+    "rust": "Resistant",
+    "disease": "Tolerant",
+    "desc": {
+      "en": "Compact canopy, which allows for densification. Short stems allow one additional harvest before renewal cycle.",
+      "id": "Kanopi kompak, yang memungkinkan untuk pemadatan tanaman. Batang pendek memungkinkan satu panen tambahan sebelum siklus pembaruan.",
+      "ko": "컴팩트한 수형(Canopy) 덕분에 식재 밀도를 극대화할 수 있어 단위 면적당 수확량이 매우 뛰어납니다. 줄기가 튼튼하고 곧아 관리가 쉽습니다."
+    },
+    "img": "https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    "id": "brs3137",
+    "name": "BRS 3137",
+    "country": "Brazil",
+    "yield": "High",
+    "mucilage": "Medium",
+    "beansize": "Large",
+    "rust": "Resistant",
+    "disease": "Resistant",
+    "desc": {
+      "en": "Recognized for its rusticity, presenting good vegetative and productive characteristics in dry conditions and low-fertility soils.",
+      "id": "Dikenal karena kerustisitasannya, menyajikan karakteristik vegetatif dan produktif yang baik dalam kondisi kering dan tanah dengan kesuburan rendah.",
+      "ko": "뛰어난 강인함과 생명력(Rusticity)을 지녀, 영양이 부족한 척박한 토양이나 극심하게 건조한 기후 조건에서도 안정적인 생장과 일정한 결실율을 유지합니다."
+    },
+    "img": "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&q=80&w=600"
+  }
+]

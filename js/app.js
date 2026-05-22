@@ -490,12 +490,19 @@
       document.getElementById('success-msg').style.display = 'block';
     }
 
-    // Init
-    setLang('ko');
-    renderCategories();
-    renderCatalog();
-    renderVlog('all');
-    renderHomeVlog();
+    // Init — load JSON data first, then render. See js/data.js for loadData().
+    (async () => {
+      try {
+        await loadData();
+      } catch (err) {
+        console.error('Failed to load site data:', err);
+      }
+      setLang('ko');
+      renderCategories();
+      renderCatalog();
+      renderVlog('all');
+      renderHomeVlog();
+    })();
     // Product Detail Modal logic
     function openProductDetail(src) {
       document.getElementById('product-detail-img').src = src;

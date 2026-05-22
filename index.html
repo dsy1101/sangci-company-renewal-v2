@@ -15,13 +15,25 @@
 ║              SANGCI COMPANY — EDITING GUIDE                      ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║                                                                  ║
-║  FILE STRUCTURE (split for maintainability)                      ║
-║  ───────────────────────────────────────────                     ║
-║  index.html      — page markup (this file)                       ║
-║  styles.css      — all visual styles                             ║
-║  js/i18n.js      — translations (T.en / T.id / T.ko)             ║
-║  js/data.js      — journal posts, product categories, cultivars  ║
-║  js/app.js       — page logic (edit only if you know JS)         ║
+║  FILE STRUCTURE                                                  ║
+║  ──────────────                                                  ║
+║  index.html         — page markup (this file)                    ║
+║  styles.css         — all visual styles                          ║
+║  js/i18n.js         — translations (T.en / T.id / T.ko)          ║
+║  js/data.js         — async data loader (fetches data/*.json)    ║
+║  js/app.js          — page logic (edit only if you know JS)      ║
+║  data/journal.json  — Business Journal entries                   ║
+║  data/products.json — Product category series                    ║
+║  data/cultivars.json — Coffee cultivar catalogue                 ║
+║                                                                  ║
+║  HOW TO PREVIEW LOCALLY                                          ║
+║  ──────────────────────                                          ║
+║  Data is fetched via JSON now, so opening index.html with        ║
+║  file:// no longer works (browsers block fetch on file://).      ║
+║  Run a server in this folder:                                    ║
+║    python -m http.server 8000                                    ║
+║  Then open  http://localhost:8000/  in your browser.             ║
+║  (Push to main → Vercel auto-deploys in ~1 min as before.)       ║
 ║                                                                  ║
 ║  HOW TO EDIT TEXT                                                ║
 ║  ─────────────────                                               ║
@@ -30,16 +42,17 @@
 ║                                                                  ║
 ║  HOW TO ADD A JOURNAL POST                                       ║
 ║  ─────────────────────────                                       ║
-║  Open js/data.js and find "const vlogs = [".                     ║
-║  Copy one existing {...} block and paste it at the TOP           ║
-║  (newest first). Fill in: date, tag, title, desc, img, youtube.  ║
-║  For img: paste a direct image URL. For youtube: full embed URL  ║
-║  or "" if no video.                                              ║
+║  Open data/journal.json and add a new {} entry at the TOP        ║
+║  (newest first). Fields: date, tag, title, desc, img, emoji,     ║
+║  youtube. title and desc are objects with en/id/ko keys.         ║
+║  For img: paste a direct image URL or "". For youtube: full      ║
+║  embed URL or "". Make sure it's valid JSON (no trailing comma   ║
+║  on the last entry, double quotes around keys).                  ║
 ║                                                                  ║
 ║  HOW TO REMOVE A JOURNAL POST                                    ║
 ║  ────────────────────────────                                    ║
-║  Open js/data.js. Find the entry in "const vlogs = [" and        ║
-║  delete the whole { ... }, block including the trailing comma.   ║
+║  Open data/journal.json and delete the entry's { ... } block     ║
+║  (with the trailing comma if not the last entry).                ║
 ║                                                                  ║
 ║  HOW TO ADD A NEW NAV PAGE                                       ║
 ║  ──────────────────────────                                      ║

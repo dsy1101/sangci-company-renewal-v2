@@ -9,9 +9,10 @@
 index copy*.html
 temp_fixed.html
 
-# Verification artifacts (regenerable via verify-split.mjs)
+# Verification & one-shot helper scripts (regenerable)
 verify-shots/
-verify-split.mjs
+verify-*.mjs
+extract-*.mjs
 
 # Node
 node_modules/
