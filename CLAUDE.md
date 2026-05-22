@@ -10,7 +10,7 @@ Static, single-page marketing site for **Sangci Company** (Indonesia ↔ Korea t
 
 - Open [index.html](index.html) directly in a browser, **or**
 - Serve the directory statically, e.g. `python -m http.server 8000` then visit `http://localhost:8000/`.
-- Deployment target is Vercel — the project is already linked via `.vercel/` (gitignored). No build step is configured; Vercel serves the static files as-is.
+- Deployment target is Vercel. The project is linked via `.vercel/` (gitignored) and auto-deploys on push to `main` (GitHub repo: `dsy1101/sangci-company-renewal-v2`). No build step.
 
 No lint, no test suite, no compile step exists. "Verifying a change" means opening the file in a browser and clicking through the three pages in all three languages.
 
