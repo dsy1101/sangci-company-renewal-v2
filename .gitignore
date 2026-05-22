@@ -1,0 +1,24 @@
+# Vercel project link (local-only)
+.vercel
+
+# Claude Code local permissions (user-specific)
+.claude/settings.local.json
+
+# Backups & manual editing snapshots (kept on disk, not in git)
+*.bak
+index copy*.html
+temp_fixed.html
+
+# Verification artifacts (regenerable via verify-split.mjs)
+verify-shots/
+verify-split.mjs
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# OS / IDE
+Thumbs.db
+.DS_Store

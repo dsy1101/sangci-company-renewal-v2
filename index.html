@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sangci Company — Your Global Partner</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap"
+    rel="stylesheet">
+
+
+  <!--
+╔══════════════════════════════════════════════════════════════════╗
+║              SANGCI COMPANY — EDITING GUIDE                      ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  FILE STRUCTURE (split for maintainability)                      ║
+║  ───────────────────────────────────────────                     ║
+║  index.html      — page markup (this file)                       ║
+║  styles.css      — all visual styles                             ║
+║  js/i18n.js      — translations (T.en / T.id / T.ko)             ║
+║  js/data.js      — journal posts, product categories, cultivars  ║
+║  js/app.js       — page logic (edit only if you know JS)         ║
+║                                                                  ║
+║  HOW TO EDIT TEXT                                                ║
+║  ─────────────────                                               ║
+║  Open js/i18n.js and find the T object.                          ║
+║  Find the key you want (e.g. hero_title) and change the text.    ║
+║                                                                  ║
+║  HOW TO ADD A JOURNAL POST                                       ║
+║  ─────────────────────────                                       ║
+║  Open js/data.js and find "const vlogs = [".                     ║
+║  Copy one existing {...} block and paste it at the TOP           ║
+║  (newest first). Fill in: date, tag, title, desc, img, youtube.  ║
+║  For img: paste a direct image URL. For youtube: full embed URL  ║
+║  or "" if no video.                                              ║
+║                                                                  ║
+║  HOW TO REMOVE A JOURNAL POST                                    ║
+║  ────────────────────────────                                    ║
+║  Open js/data.js. Find the entry in "const vlogs = [" and        ║
+║  delete the whole { ... }, block including the trailing comma.   ║
+║                                                                  ║
+║  HOW TO ADD A NEW NAV PAGE                                       ║
+║  ──────────────────────────                                      ║
+║  1. Add a nav link in index.html:                                ║
+║       <li><a onclick="showPage('PAGEID')">...</a></li>           ║
+║  2. Add a page div in index.html:                                ║
+║       <div class="page" id="page-PAGEID">...</div>               ║
+║  3. Add translations in js/i18n.js (T.en / T.id / T.ko)          ║
+║                                                                  ║
+║  HOW TO REMOVE A PAGE                                            ║
+║  ─────────────────────                                           ║
+║  1. Delete the <li> nav link in index.html                       ║
+║  2. Delete the <div class="page" id="page-XXX"> block            ║
+║  3. Remove related keys in js/i18n.js                            ║
+║                                                                  ║
+║  HOW TO EDIT CONTACT INFO                                        ║
+║  ─────────────────────────                                       ║
+║  Search index.html for "sangcikoreaidn@gmail.com" or             ║
+║  "+82) 10-5613-0731" and replace directly.                       ║
+║                                                                  ║
+║  HOW TO CHANGE COLORS                                            ║
+║  ─────────────────────                                           ║
+║  Open styles.css and find ":root {" at the top.                  ║
+║  --navy, --gold, --cream etc. control the whole color scheme.    ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <link rel="stylesheet" href="styles.css">
+  <style id="antigravity-scroll-lock-style">
+    html:root body.antigravity-scroll-lock {
+      overflow: hidden !important;
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Official Taegukgi SVG symbol (government colors: red #C60C30, blue #003478) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="taegukgi" viewBox="0 0 900 600">
+      <rect width="900" height="600" fill="#fff"></rect>
+      <g transform="translate(120,113) rotate(-56)" stroke="#000" stroke-width="29" stroke-linecap="butt">
+        <line x1="-99" y1="-49.5" x2="99" y2="-49.5"></line>
+        <line x1="-99" y1="0" x2="99" y2="0"></line>
+        <line x1="-99" y1="49.5" x2="99" y2="49.5"></line>
+      </g>
+      <g transform="translate(780,487) rotate(-56)" stroke="#000" stroke-width="29" stroke-linecap="butt">
+        <line x1="-99" y1="-49.5" x2="-14" y2="-49.5"></line>
+        <line x1="14" y1="-49.5" x2="99" y2="-49.5"></line>
+        <line x1="-99" y1="0" x2="-14" y2="0"></line>
+        <line x1="14" y1="0" x2="99" y2="0"></line>
+        <line x1="-99" y1="49.5" x2="-14" y2="49.5"></line>
+        <line x1="14" y1="49.5" x2="99" y2="49.5"></line>
+      </g>
+      <g transform="translate(780,113) rotate(56)" stroke="#000" stroke-width="29" stroke-linecap="butt">
+        <line x1="-99" y1="-49.5" x2="99" y2="-49.5"></line>
+        <line x1="-99" y1="0" x2="-14" y2="0"></line>
+        <line x1="14" y1="0" x2="99" y2="0"></line>
+        <line x1="-99" y1="49.5" x2="99" y2="49.5"></line>
+      </g>
+      <g transform="translate(120,487) rotate(56)" stroke="#000" stroke-width="29" stroke-linecap="butt">
+        <line x1="-99" y1="-49.5" x2="-14" y2="-49.5"></line>
+        <line x1="14" y1="-49.5" x2="99" y2="-49.5"></line>
+        <line x1="-99" y1="0" x2="99" y2="0"></line>
+        <line x1="-99" y1="49.5" x2="-14" y2="49.5"></line>
+        <line x1="14" y1="49.5" x2="99" y2="49.5"></line>
+      </g>
+      <circle cx="450" cy="300" r="150" fill="#C60C30"></circle>
+      <path d="M450,150 A150,150 0 0,0 450,450 A75,75 0 0,0 450,300 A75,75 0 0,1 450,150 Z" fill="#003478"></path>
+      <circle cx="450" cy="225" r="75" fill="#C60C30"></circle>
+      <circle cx="450" cy="375" r="75" fill="#003478"></circle>
+    </symbol>
+  </svg>
+
+  <!-- ══ VLOG MODAL ══ -->
+  <div class="vlog-modal-overlay" id="vlog-modal" onclick="closeModal(event)">
+    <div class="vlog-modal">
+      <button class="vlog-modal-close" onclick="closeModalBtn()">✕</button>
+      <div id="modal-media"></div>
+      <div class="vlog-modal-body">
+        <div class="vlog-modal-meta">
+          <span class="vlog-tag" id="modal-tag"></span>
+          <span class="vlog-date" id="modal-date"></span>
+        </div>
+        <div class="vlog-modal-title" id="modal-title"></div>
+        <div class="vlog-modal-desc" id="modal-desc"></div>
+        <div id="modal-video"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LANGUAGE BAR ══ -->
+  <div id="lang-bar">
+    <button class="lang-btn active" onclick="setLang('ko')" title="한국어">
+      <svg class="flag-mini" viewBox="0 0 900 600">
+        <use href="#taegukgi"></use>
+      </svg>
+      한국어
+    </button>
+    <button class="lang-btn" onclick="setLang('en')" title="English">
+      <svg class="flag-mini" viewBox="0 0 18 12">
+        <rect width="18" height="12" fill="#012169"></rect>
+        <path d="M0,0 L18,12 M18,0 L0,12" stroke="#fff" stroke-width="2.4"></path>
+        <path d="M0,0 L18,12 M18,0 L0,12" stroke="#C8102E" stroke-width="1.4"></path>
+        <path d="M9,0 V12 M0,6 H18" stroke="#fff" stroke-width="3.6"></path>
+        <path d="M9,0 V12 M0,6 H18" stroke="#C8102E" stroke-width="2.2"></path>
+      </svg>
+      EN
+    </button>
+    <button class="lang-btn" onclick="setLang('id')" title="Bahasa Indonesia">
+      <svg class="flag-mini" viewBox="0 0 18 12">
+        <rect width="18" height="6" fill="#CE1126"></rect>
+        <rect y="6" width="18" height="6" fill="#fff"></rect>
+      </svg>
+      ID
+    </button>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <div class="logo-wrap" onclick="showPage('home')">
+      <img src="assets/images/sangci-logo.png" alt="Sangci Company" class="header-logo">
+    </div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" id="nav-home" class="active" data-i18n="nav_home">Home</a></li>
+      <li><a onclick="scrollToAbout()" data-i18n="nav_about">About</a></li>
+      <li><a onclick="showPage('seller')" id="nav-seller" data-i18n="nav_sellers">Products</a></li>
+      <li><a onclick="showPage('vlog')" id="nav-vlog" data-i18n="nav_vlog">Business Journal</a></li>
+      <li><a onclick="scrollToContact()" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" onclick="scrollToContact()" data-i18n="nav_cta">Get in touch</a>
+  </nav>
+
+  <!-- ══════════ HOME PAGE ══════════ -->
+  <div class="page active" id="page-home">
+    <section id="hero">
+      <div class="hero-bg-media">
+        <img id="hero-fallback"
+          src="https://images.unsplash.com/photo-1559480671-12ecf991154a?auto=format&amp;fit=crop&amp;q=80&amp;w=2000"
+          alt="Global Trade Background" style="display: none;">
+        <video src="assets/video/hero.mp4" autoplay="" loop="" muted="" playsinline=""
+          onloadeddata="document.getElementById('hero-fallback').style.display='none'" onerror="this.remove()"></video>
+      </div>
+      <div class="hero-content">
+        <div class="hero-eyebrow" data-i18n="hero_eyebrow">Indonesia · Korea Market Developer</div>
+        <h1 class="hero-title" data-i18n="hero_title">Your trusted bridge between <strong>two dynamic</strong> Asian
+          markets.</h1>
+        <p class="hero-tagline" data-i18n="tagline">Your Global Partner</p>
+        <p class="hero-sub" data-i18n="hero_sub">Sangci Company connects businesses across Indonesia and South Korea —
+          providing local knowledge, strategic insight, and trusted relationships to make cross-border partnerships
+          succeed.</p>
+        <div class="hero-btns">
+          <a class="btn-gold" onclick="scrollToContact()" data-i18n="hero_btn1">Start a conversation</a>
+          <a class="btn-outline" onclick="scrollToAbout()" data-i18n="hero_btn2">Learn more</a>
+        </div>
+      </div>
+      <div class="hero-flags">
+        <div class="flag-item">
+          <div class="flag-swatch-id">
+            <div class="f-top"></div>
+            <div class="f-bot"></div>
+          </div>
+          <span data-i18n="indonesia">Indonesia</span>
+        </div>
+        <div class="flag-sep">·</div>
+        <div class="flag-item">
+          <span data-i18n="korea">South Korea</span>
+        </div>
+      </div>
+      <div class="hero-bg-word" aria-hidden="true">SANGCI</div>
+    </section>
+
+    <!-- Quick access: Seller + Vlog -->
+    <div class="qa-container">
+      <div class="qa-header">
+        <div class="qa-header-left">
+          <div class="qa-label" data-i18n="qa_section_label">Our Services</div>
+          <h2 data-i18n="qa_section_title">Unlock global growth with Sangci Company.</h2>
+        </div>
+        <div class="qa-header-right">
+          <a class="btn-gold" style="border-radius:2rem; padding:0.8rem 1.8rem;" onclick="scrollToContact()"
+            data-i18n="nav_cta">Get in touch</a>
+        </div>
+      </div>
+      <div class="quick-access">
+        <div class="qa-card" onclick="showPage('seller')">
+          <img class="qa-card-bg" src="assets/images/qa-seller.jpg"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&amp;fit=crop&amp;q=80&amp;w=1200'"
+            alt="Trade">
+          <div class="qa-card-overlay"></div>
+          <div class="qa-card-top">
+            <div class="qa-badge">📦 <span data-i18n="for_sellers">For Sellers</span></div>
+          </div>
+          <div class="qa-card-content">
+            <div class="qa-title" data-i18n="qa_seller_title">Enter New Markets</div>
+            <p class="qa-desc" data-i18n="qa_seller_desc">Connect with buyers in Indonesia and Korea. Register your
+              products and reach decision-makers across industries.</p>
+          </div>
+        </div>
+        <div class="qa-card" onclick="showPage('vlog')">
+          <img class="qa-card-bg" src="assets/images/qa-vlog.jpg"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&amp;fit=crop&amp;q=80&amp;w=1200'"
+            alt="Business">
+          <div class="qa-card-overlay"></div>
+          <div class="qa-card-top">
+            <div class="qa-badge">🎬 <span data-i18n="vlog_type">Business Journal</span></div>
+          </div>
+          <div class="qa-card-content">
+            <div class="qa-title" data-i18n="qa_vlog_title">Business Journal</div>
+            <p class="qa-desc" data-i18n="qa_vlog_desc">A behind-the-scenes look at Sangci Company — meetings, factory
+              visits, field checks, and business trips between Indonesia and Korea.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-divider"></div>
+
+
+
+    <section id="about-section">
+      <div class="about-inner">
+        <div>
+          <div class="section-eyebrow" data-i18n="about_label">About Sangci Company</div>
+          <h2 class="section-title" style="margin-bottom:2rem; font-size:clamp(1.5rem, 3vw, 2.5rem);"
+            data-i18n="about_title">We know <em>both sides</em> of the bridge.</h2>
+          <p class="about-body" data-i18n="about_p1">Sangci Company was founded by professionals with deep expertise in
+            both the Indonesian and Korean business landscapes. We don't just translate language — we translate business
+            culture, expectations, and opportunity.</p>
+          <div class="services">
+            <div class="service-row">
+              <div class="service-num">01</div>
+              <div class="service-body"><strong data-i18n="s1_title">Market Entry Strategy</strong>
+                <p data-i18n="s1_desc">Regulatory guidance, partner identification, and go-to-market planning tailored
+                  to each country's environment.</p>
+              </div>
+            </div>
+            <div class="service-row">
+              <div class="service-num">02</div>
+              <div class="service-body"><strong data-i18n="s2_title">Business Matchmaking</strong>
+                <p data-i18n="s2_desc">Connecting the right companies through our curated network across key industries
+                  in both markets.</p>
+              </div>
+            </div>
+            <div class="service-row">
+              <div class="service-num">03</div>
+              <div class="service-body"><strong data-i18n="s3_title">Consulting &amp; Due Diligence</strong>
+                <p data-i18n="s3_desc">Cultural advisory, risk assessment, and deal structuring support for lasting
+                  cross-border partnerships.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-image-wrapper">
+          <img class="about-vertical-img" src="assets/images/about-vertical.png" alt="About Sangci Company"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&amp;fit=crop&amp;q=80&amp;w=800&amp;h=1200'">
+        </div>
+      </div>
+    </section>
+
+    <section id="contact-section">
+      <div class="contact-inner">
+        <div>
+          <div class="section-eyebrow" data-i18n="contact_label">Contact</div>
+          <h2 class="section-title" data-i18n="contact_title">Let's build something <em>across borders.</em></h2>
+          <div class="ceo-card">
+            <div class="ceo-name">Christian Linero</div>
+            <div class="ceo-title" data-i18n="ceo_title">CEO / Founder</div>
+          </div>
+          <div class="contact-info">
+            <div class="cinfo-row">
+              <div class="cinfo-icon">✉</div>
+              <div class="cinfo-text"><strong data-i18n="contact_email">Email</strong>sangcicompany@gmail.com</div>
+            </div>
+            <div class="cinfo-row">
+              <div class="cinfo-icon">☎</div>
+              <div class="cinfo-text"><strong data-i18n="contact_phone">Phone / KakaoTalk / WhatsApp</strong>+82)
+                10-5613-0731</div>
+            </div>
+            <div class="cinfo-row">
+              <div class="cinfo-icon">⌖</div>
+              <div class="cinfo-text"><strong data-i18n="contact_loc">Location</strong>Busan, South Korea</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="contact-form">
+            <div id="the-form">
+              <div class="form-row"><label data-i18n="form_name">Your name</label><input type="text" id="f-name"
+                  data-i18n-ph="form_name_ph" placeholder="Your full name"></div>
+              <div class="form-row"><label data-i18n="form_email">Email address</label><input type="email" id="f-email"
+                  placeholder="you@company.com"></div>
+              <div class="form-row">
+                <label data-i18n="form_country">Your business is based in</label>
+                <select id="f-country">
+                  <option value="" disabled="" selected="" data-i18n="form_select">Select country</option>
+                  <option data-i18n="indonesia">Indonesia</option>
+                  <option data-i18n="korea">South Korea</option>
+                  <option data-i18n="other">Other</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label data-i18n="form_role">I am a</label>
+                <select id="f-role">
+                  <option value="" disabled="" selected="" data-i18n="form_select_role">Select role</option>
+                  <option data-i18n="seller_opt">Seller</option>
+                  <option data-i18n="both_opt">Both</option>
+                  <option data-i18n="other">Other</option>
+                </select>
+              </div>
+              <div class="form-row"><label data-i18n="form_msg">How can Sangci Company help?</label><textarea id="f-msg"
+                  data-i18n-ph="form_msg_ph" placeholder="Tell us about your business..."></textarea></div>
+              <button class="form-submit" onclick="submitForm()" data-i18n="form_send">Send message →</button>
+            </div>
+            <div class="success-msg" id="success-msg">
+              <div class="success-icon">✓</div>
+              <h3 data-i18n="form_success_h">Message received.</h3>
+              <p data-i18n="form_success_p">The Sangci Company team will be in touch within 1–2 business days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-simple-content">
+        <p class="footer-brand-simple">SANGCI COMPANY</p>
+        <div class="footer-nav-simple">
+          <a onclick="showPage('home'); window.scrollTo(0,0);" data-i18n="nav_home">Home</a>
+          <a onclick="scrollToAbout()" data-i18n="nav_about">About</a>
+          <a onclick="showPage('seller'); window.scrollTo(0,0);" data-i18n="nav_sellers">Products</a>
+          <a onclick="showPage('vlog'); window.scrollTo(0,0);" data-i18n="nav_vlog">Business Journal</a>
+          <a onclick="scrollToContact()" data-i18n="nav_contact">Contact</a>
+        </div>
+        <p class="footer-info-simple">
+          상호 : 상치컴퍼니 &nbsp;|&nbsp; 대표자명 : 동상엽<br>
+          사업자등록번호 : 501-20-41875<br>
+          사업장소재지 : 부산광역시 부산진구 신천대로65번길 9, 1507호(범천동, 다인로얄팰리스)
+        </p>
+        <p class="footer-copy-simple" data-i18n="footer_copy">© 2025 Sangci Company. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ══════════ SELLER PAGE ══════════ -->
+  <div class="page" id="page-seller">
+    <div class="bs-page">
+      <div class="bs-hero seller">
+        <div class="bs-hero-content">
+          <div class="bs-badge">📦 <span data-i18n="seller_badge">Seller Directory</span></div>
+          <h1 data-i18n="seller_hero_title">Reach buyers in <strong>Indonesia &amp; Korea</strong> across every
+            industry.</h1>
+          <p data-i18n="seller_hero_sub">List your products and connect with qualified buyers. Sangci Company provides
+            market access and relationship management across both countries.</p>
+        </div>
+        <div class="bs-hero-bg" aria-hidden="true">SELL</div>
+      </div>
+      <div class="bs-categories" id="seller-categories">
+        <h2 data-i18n="browse_cat">Browse by category</h2>
+        <p class="subtitle" data-i18n="seller_sub">Explore the industries where Sangci Company actively connects sellers
+          with buyers in Indonesia and South Korea.</p>
+        <div class="cat-grid" id="seller-cat-grid"></div>
+      </div>
+      <div class="bs-cta-strip">
+        <div>
+          <h3 data-i18n="seller_cta_h">Ready to list your products?</h3>
+          <p data-i18n="seller_cta_p">Register with Sangci Company and we'll match you with the right buyers.</p>
+        </div>
+        <a class="btn-gold" onclick="showPage('home');setTimeout(scrollToContact,300)"
+          data-i18n="register_seller">Register as Seller →</a>
+      </div>
+      <footer>
+        <div class="footer-simple-content">
+          <p class="footer-brand-simple">SANGCI COMPANY</p>
+          <div class="footer-nav-simple">
+            <a onclick="showPage('home'); window.scrollTo(0,0);" data-i18n="nav_home">Home</a>
+            <a onclick="scrollToAbout()" data-i18n="nav_about">About</a>
+            <a onclick="showPage('seller'); window.scrollTo(0,0);" data-i18n="nav_sellers">Products</a>
+            <a onclick="showPage('vlog'); window.scrollTo(0,0);" data-i18n="nav_vlog">Business Journal</a>
+            <a onclick="scrollToContact()" data-i18n="nav_contact">Contact</a>
+          </div>
+          <p class="footer-info-simple">
+            상호 : 상치컴퍼니 &nbsp;|&nbsp; 대표자명 : 동상엽<br>
+            사업자등록번호 : 501-20-41875<br>
+            사업장소재지 : 부산광역시 부산진구 신천대로65번길 9, 1507호(범천동, 다인로얄팰리스)
+          </p>
+          <p class="footer-copy-simple" data-i18n="footer_copy2">© 2025 Sangci Company. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ══════════ VLOG PAGE ══════════ -->
+  <div class="page" id="page-vlog">
+    <div class="vlog-page">
+      <div class="vlog-hero">
+        <div class="vlog-hero-content">
+          <div class="bs-badge">🎬 <span data-i18n="vlog_badge">Business Journal</span></div>
+          <h1 data-i18n="vlog_hero_title">Our <strong>Business Journal.</strong></h1>
+          <p data-i18n="vlog_hero_sub">A behind-the-scenes look at Sangci Company — meetings, factory visits, field
+            checks, and business trips across Indonesia and South Korea.</p>
+        </div>
+        <div class="vlog-hero-bg" aria-hidden="true">JOURNAL</div>
+      </div>
+
+      <!-- Filter tabs — clicking filters posts by tag -->
+      <div class="vlog-filters" id="vlog-filter-bar">
+        <button class="vfilter active" onclick="filterVlog('all')" data-i18n="vlog_all">All</button>
+        <button class="vfilter" onclick="filterVlog('meeting')" data-i18n="vlog_meeting">Meeting</button>
+        <button class="vfilter" onclick="filterVlog('field')" data-i18n="vlog_field">Field Check</button>
+        <button class="vfilter" onclick="filterVlog('factory')" data-i18n="vlog_factory">Factory Visit</button>
+        <button class="vfilter" onclick="filterVlog('travel')" data-i18n="vlog_travel">Business Trip</button>
+        <button class="vfilter" onclick="filterVlog('networking')" data-i18n="vlog_networking">Networking</button>
+      </div>
+
+      <div class="vlog-grid" id="vlog-grid"></div>
+
+      <footer>
+        <div class="footer-simple-content">
+          <p class="footer-brand-simple">SANGCI COMPANY</p>
+          <div class="footer-nav-simple">
+            <a onclick="showPage('home'); window.scrollTo(0,0);" data-i18n="nav_home">Home</a>
+            <a onclick="scrollToAbout()" data-i18n="nav_about">About</a>
+            <a onclick="showPage('seller'); window.scrollTo(0,0);" data-i18n="nav_sellers">Products</a>
+            <a onclick="showPage('vlog'); window.scrollTo(0,0);" data-i18n="nav_vlog">Business Journal</a>
+            <a onclick="scrollToContact()" data-i18n="nav_contact">Contact</a>
+          </div>
+          <p class="footer-info-simple">
+            상호 : 상치컴퍼니 &nbsp;|&nbsp; 대표자명 : 동상엽<br>
+            사업자등록번호 : 501-20-41875<br>
+            사업장소재지 : 부산광역시 부산진구 신천대로65번길 9, 1507호(범천동, 다인로얄팰리스)
+          </p>
+          <p class="footer-copy-simple" data-i18n="footer_copy2">© 2025 Sangci Company. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Product Detail Image Modal -->
+  <div class="img-modal-overlay" id="product-detail-modal" onclick="closeProductDetail()">
+    <div class="img-modal-content" onclick="event.stopPropagation()">
+      <button class="img-modal-close" onclick="closeProductDetail()">&times;</button>
+      <img id="product-detail-img" src="" alt="Product Detail">
+    </div>
+  </div>
+
+  <div id="preact-border-shadow-host" popover="manual"
+    style="border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px; margin: 0px; inset: 0px; position: fixed; width: 100vw; height: 100vh; background: transparent; pointer-events: none;">
+  </div>
+</body>
+
+</html>
