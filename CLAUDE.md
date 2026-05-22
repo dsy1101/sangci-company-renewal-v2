@@ -35,6 +35,10 @@ No lint, no test suite, no compile step. "Verifying a change" means running a se
 
 `js/app.js` ends with an IIFE that `await loadData()` before calling `setLang('ko')` and the renderers. Any code that depends on `vlogs` / `catData` / `coffeeClones` must therefore run **after** that await — i.e., inside renderers or user-triggered handlers, not at script top level.
 
+### 1a. `app.js` functions are intentionally global
+
+`index.html` wires interactions with inline attributes like `onclick="showPage('vlog')"`, `onclick="openModal(${idx})"`, `onclick="openCatalogModal('${clone.id}')"`. Those handlers resolve against `window`, so every function in `js/app.js` must stay at the top level of the script. **Do not** wrap `app.js` in an IIFE, convert it to `<script type="module">`, or move handlers into nested closures — navigation and modals will silently stop working. Same applies to `loadData` / `vlogs` / `catData` / `coffeeClones` in `js/data.js`.
+
 ### 2. Page switching
 
 `showPage(name)` hides every `.page`, adds `active` to `#page-<name>`, scrolls to top, and conditionally re-runs renderers. To add a page you must do **all three**: add a nav `<li>` in `index.html`, add a `<div class="page" id="page-XYZ">` in `index.html`, and add the i18n keys in `js/i18n.js`. To remove one, remove all three.
@@ -47,6 +51,7 @@ No lint, no test suite, no compile step. "Verifying a change" means running a se
 - Mark elements with `data-i18n="key"` (innerHTML) or `data-i18n-ph="key"` (placeholder). `setLang(lang)` walks the DOM and replaces content.
 - **When you add a new visible string, add the key to all three locales in `T`.** Missing keys silently fall through to whatever static HTML was already there.
 - `setLang` also toggles `body.lang-en` / `body.lang-id` / `body.lang-ko`. Korean has separate font sizing/weight rules throughout `styles.css` (search `body.lang-ko`) because `Noto Sans KR` renders heavier than the Latin serif. **When you add or restyle a heading, add the matching `body.lang-ko` override** or Korean will look wrong.
+- **Catalog filter/modal labels are not in `T`.** `renderCatalog` and `openCatalogModal` in `js/app.js` build their yield / bean-size / mucilage / rust / disease / origin labels with inline `currentLang === 'ko' ? '한국어' : englishValue` ternaries (Indonesian falls through to the English branch). To change those, edit the function — not `i18n.js`. If you ever need real Indonesian labels there, refactor to use `T` rather than extending the ternary.
 
 ### 4. Dynamic content — JSON files
 
@@ -70,6 +75,7 @@ Email `sangcikoreaidn@gmail.com` and phone `+82) 10-5613-0731` appear as literal
 
 - **`incore-website_sample.html`** — an older snapshot used as the input file for Python helper scripts that no longer run. **It is not the live site**; do not edit it expecting changes to show up.
 - **`index.html.bak`, `index.html.pre-split.bak`, `index copy.html`** — gitignored manual backups from prior editing sessions. Ignore unless explicitly asked to diff against a prior version.
+- **`extract-data.mjs`, `verify-split.mjs`, `verify-phase2.mjs`, `verify-shots/`** — gitignored one-shot helper scripts from the JS→JSON split migration. They are not part of the runtime, not used in CI, and safe to ignore. Don't add new "verify" scripts here unless you also un-gitignore them; otherwise they'll quietly disappear on a fresh clone.
 - **`assets/`** — images and the hero `video/hero.mp4`. Reference with relative paths from the project root.
 - **`Sangci_Company_소개자료_커피.pdf`** — Korean-language company brochure, reference material only.
 
