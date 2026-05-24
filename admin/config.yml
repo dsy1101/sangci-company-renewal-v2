@@ -36,6 +36,8 @@ collections:
   - name: journal
     label: "비즈니스 저널"
     label_singular: "저널 글"
+    editor:
+      preview: false
     files:
       - name: journal_file
         label: "저널 전체 (새 글은 맨 위로 드래그)"
@@ -104,6 +106,8 @@ collections:
   - name: products
     label: "제품"
     label_singular: "제품 시리즈"
+    editor:
+      preview: false
     files:
       - name: products_file
         label: "제품 시리즈 전체"
