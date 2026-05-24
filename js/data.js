@@ -9,6 +9,10 @@
 //   data/products.json   — Product category series (catData)
 //   data/cultivars.json  — Coffee cultivar catalogue (coffeeClones)
 //
+// journal.json and products.json are written by Decap CMS as a root
+// object with one key (entries / series). cultivars.json is still a
+// bare array. The `?? json` fallback keeps both shapes working.
+//
 // These variables start empty and are populated by loadData() before
 // any renderer runs. app.js init() awaits loadData() first.
 // ══════════════════════════════════════════════════════════
@@ -28,7 +32,7 @@ async function loadData() {
     fetchJson('data/products.json'),
     fetchJson('data/cultivars.json'),
   ]);
-  vlogs = journal;
-  catData = products;
+  vlogs = journal.entries ?? journal;
+  catData = products.series ?? products;
   coffeeClones = cultivars;
 }
