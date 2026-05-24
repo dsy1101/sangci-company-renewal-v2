@@ -382,6 +382,27 @@
       event.target.classList.add('active');
       renderVlog(tag);
     }
+    // ── Journal entry helpers ────────────────────────────────
+    // Entries use a flat schema: title_ko/en/id, body_ko/en/id.
+    // Korean is required; other locales fall back to Korean if empty.
+    function vlogField(v, base, lang) {
+      const v1 = v[base + '_' + lang];
+      if (v1 && String(v1).trim()) return v1;
+      return v[base + '_ko'] || '';
+    }
+    // Markdown body → plain text preview for card summaries.
+    function vlogPreview(md, limit) {
+      if (!md) return '';
+      if (typeof marked !== 'undefined') {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = marked.parse(md);
+        const txt = (tmp.textContent || '').replace(/\s+/g, ' ').trim();
+        return txt.length > limit ? txt.slice(0, limit) + '…' : txt;
+      }
+      const stripped = md.replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[#*_`>]/g, '').replace(/\s+/g, ' ').trim();
+      return stripped.length > limit ? stripped.slice(0, limit) + '…' : stripped;
+    }
+
     function renderVlog(tag) {
       const grid = document.getElementById('vlog-grid');
       if (!grid) return;
@@ -393,18 +414,16 @@
       const tagLabels = { meeting: T[currentLang].vlog_meeting, field: T[currentLang].vlog_field, factory: T[currentLang].vlog_factory, travel: T[currentLang].vlog_travel, networking: T[currentLang].vlog_networking };
       grid.innerHTML = filtered.map((v, i) => {
         const idx = vlogs.indexOf(v);
-        const title = v.title[currentLang] || v.title.en;
-        const desc = v.desc[currentLang] || v.desc.en;
+        const title = vlogField(v, 'title', currentLang);
+        const preview = vlogPreview(vlogField(v, 'body', currentLang), 120);
         const tagLabel = tagLabels[v.tag] || v.tag;
-        const media = v.img
-          ? `<img class="vlog-thumb" src="${v.img}" alt="${title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` + `<div class="vlog-thumb-placeholder" style="display:none">${v.emoji || '🎬'}</div>`
-          : `<div class="vlog-thumb-placeholder">${v.emoji || '🎬'}</div>`;
+        const media = `<div class="vlog-thumb-placeholder">${v.emoji || '📝'}</div>`;
         return `<div class="vlog-card" onclick="openModal(${idx})">
       ${media}
       <div class="vlog-body">
         <div class="vlog-meta"><span class="vlog-tag">${tagLabel}</span><span class="vlog-date">${v.date}</span></div>
         <div class="vlog-title">${title}</div>
-        <div class="vlog-desc">${desc.substring(0, 120)}${desc.length > 120 ? '…' : ''}</div>
+        <div class="vlog-desc">${preview}</div>
         <span class="vlog-read">${T[currentLang].vlog_watch || 'Read more'}</span>
       </div>
     </div>`;
@@ -414,24 +433,28 @@
     function openModal(idx) {
       const v = vlogs[idx];
       const lang = currentLang;
-      const title = v.title[lang] || v.title.en;
-      const desc = v.desc[lang] || v.desc.en;
+      const title = vlogField(v, 'title', lang);
+      const body = vlogField(v, 'body', lang);
       const tagLabels = { meeting: T[lang].vlog_meeting, field: T[lang].vlog_field, factory: T[lang].vlog_factory, travel: T[lang].vlog_travel, networking: T[lang].vlog_networking };
 
       document.getElementById('modal-tag').textContent = tagLabels[v.tag] || v.tag;
       document.getElementById('modal-date').textContent = v.date;
       document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-desc').textContent = desc;
 
-      const media = document.getElementById('modal-media');
-      media.innerHTML = v.img
-        ? `<img class="vlog-modal-img" src="${v.img}" alt="${title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="vlog-modal-img-placeholder" style="display:none">${v.emoji || '🎬'}</div>`
-        : `<div class="vlog-modal-img-placeholder">${v.emoji || '🎬'}</div>`;
+      // Render markdown body (images, links, formatting all inline).
+      const descEl = document.getElementById('modal-desc');
+      descEl.className = 'vlog-modal-prose';
+      if (typeof marked !== 'undefined') {
+        descEl.innerHTML = marked.parse(body || '');
+      } else {
+        descEl.textContent = body || '';
+      }
 
-      const vid = document.getElementById('modal-video');
-      vid.innerHTML = v.youtube
-        ? `<iframe class="vlog-modal-video" src="${v.youtube}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`
-        : `<div class="vlog-no-video">${T[lang].vlog_no_video || 'No video attached yet.'}</div>`;
+      // The body owns its own images/videos now — header just shows the
+      // entry's emoji as a thumbnail. Legacy media/video slots stay empty.
+      document.getElementById('modal-media').innerHTML = v.emoji
+        ? `<div class="vlog-modal-img-placeholder">${v.emoji}</div>` : '';
+      document.getElementById('modal-video').innerHTML = '';
 
       document.getElementById('vlog-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -464,11 +487,9 @@
       const tagLabels = { meeting: T[currentLang].vlog_meeting, field: T[currentLang].vlog_field, factory: T[currentLang].vlog_factory, travel: T[currentLang].vlog_travel, networking: T[currentLang].vlog_networking };
       grid.innerHTML = recent.map((v) => {
         const idx = vlogs.indexOf(v);
-        const title = v.title[currentLang] || v.title.en;
+        const title = vlogField(v, 'title', currentLang);
         const tagLabel = tagLabels[v.tag] || v.tag;
-        const media = v.img
-          ? `<img class="vlog-thumb" src="${v.img}" alt="${title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` + `<div class="vlog-thumb-placeholder" style="display:none">${v.emoji || '🎬'}</div>`
-          : `<div class="vlog-thumb-placeholder" style="display:none">${v.emoji || '🎬'}</div>`;
+        const media = `<div class="vlog-thumb-placeholder">${v.emoji || '📝'}</div>`;
         return `<div class="vlog-card glass" onclick="openModal(${idx})">
       <div style="height:180px; overflow:hidden;">${media}</div>
       <div class="vlog-body">

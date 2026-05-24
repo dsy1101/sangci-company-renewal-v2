@@ -3,87 +3,57 @@
     {
       "date": "May 8, 2026",
       "tag": "meeting",
-      "title": {
-        "en": "Strategy meeting in Busan",
-        "id": "Rapat strategi di Busan",
-        "ko": "부산 전략 회의"
-      },
-      "desc": {
-        "en": "Our team gathered in Busan to align on Q2 market entry plans for Indonesian partners. We discussed regulatory timelines, key contacts, and next steps for three active deals.",
-        "id": "Tim kami berkumpul di Busan untuk menyesuaikan rencana masuk pasar Q2 bagi mitra Indonesia. Kami mendiskusikan jadwal regulasi, kontak utama, dan langkah selanjutnya untuk tiga kesepakatan aktif.",
-        "ko": "저희 팀은 인도네시아 파트너의 2분기 시장 진출 계획을 조율하기 위해 부산에 모였습니다. 규제 일정, 주요 연락처 및 3개의 진행 중인 거래에 대한 다음 단계를 논의했습니다."
-      },
-      "img": "",
       "emoji": "🤝",
-      "youtube": ""
+      "title_ko": "부산 전략 회의",
+      "title_en": "Strategy meeting in Busan",
+      "title_id": "Rapat strategi di Busan",
+      "body_ko": "저희 팀은 인도네시아 파트너의 2분기 시장 진출 계획을 조율하기 위해 부산에 모였습니다. 규제 일정, 주요 연락처 및 3개의 진행 중인 거래에 대한 다음 단계를 논의했습니다.",
+      "body_en": "Our team gathered in Busan to align on Q2 market entry plans for Indonesian partners. We discussed regulatory timelines, key contacts, and next steps for three active deals.",
+      "body_id": "Tim kami berkumpul di Busan untuk menyesuaikan rencana masuk pasar Q2 bagi mitra Indonesia. Kami mendiskusikan jadwal regulasi, kontak utama, dan langkah selanjutnya untuk tiga kesepakatan aktif."
     },
     {
       "date": "May 3, 2026",
       "tag": "factory",
-      "title": {
-        "en": "Factory visit — Nickel processing plant, Sulawesi",
-        "id": "Kunjungan pabrik — Pabrik pengolahan nikel, Sulawesi",
-        "ko": "공장 방문 — 술라웨시 니켈 가공 공장"
-      },
-      "desc": {
-        "en": "We visited a leading nickel processing facility in Sulawesi to assess production capacity and quality standards. A potential supply agreement is under discussion with Korean battery manufacturers.",
-        "id": "Kami mengunjungi fasilitas pengolahan nikel terkemuka di Sulawesi untuk menilai kapasitas produksi dan standar kualitas. Perjanjian pasokan potensial sedang dibahas dengan produsen baterai Korea.",
-        "ko": "생산 능력과 품질 기준을 평가하기 위해 술라웨시에 있는 선도적인 니켈 가공 시설을 방문했습니다. 한국 배터리 제조업체와 잠재적인 공급 계약을 논의 중입니다."
-      },
-      "img": "",
       "emoji": "🏭",
-      "youtube": ""
+      "title_ko": "공장 방문 — 술라웨시 니켈 가공 공장",
+      "title_en": "Factory visit — Nickel processing plant, Sulawesi",
+      "title_id": "Kunjungan pabrik — Pabrik pengolahan nikel, Sulawesi",
+      "body_ko": "생산 능력과 품질 기준을 평가하기 위해 술라웨시에 있는 선도적인 니켈 가공 시설을 방문했습니다. 한국 배터리 제조업체와 잠재적인 공급 계약을 논의 중입니다.",
+      "body_en": "We visited a leading nickel processing facility in Sulawesi to assess production capacity and quality standards. A potential supply agreement is under discussion with Korean battery manufacturers.",
+      "body_id": "Kami mengunjungi fasilitas pengolahan nikel terkemuka di Sulawesi untuk menilai kapasitas produksi dan standar kualitas. Perjanjian pasokan potensial sedang dibahas dengan produsen baterai Korea."
     },
     {
       "date": "Apr 28, 2026",
       "tag": "travel",
-      "title": {
-        "en": "Business trip to Jakarta — partner onboarding",
-        "id": "Perjalanan bisnis ke Jakarta — orientasi mitra",
-        "ko": "자카르타 출장 — 파트너 온보딩"
-      },
-      "desc": {
-        "en": "Christian flew to Jakarta to meet three new potential partners in the food & beverage and textile sectors. Productive meetings and site visits were held over two days.",
-        "id": "Christian terbang ke Jakarta untuk bertemu tiga mitra potensial baru di sektor makanan & minuman dan tekstil. Pertemuan produktif dan kunjungan lapangan diadakan selama dua hari.",
-        "ko": "크리스티안은 식음료 및 섬유 분야의 세 곳의 새로운 잠재 파트너를 만나기 위해 자카르타로 비행했습니다. 이틀 동안 생산적인 회의와 현장 방문이 진행되었습니다."
-      },
-      "img": "",
       "emoji": "✈️",
-      "youtube": ""
+      "title_ko": "자카르타 출장 — 파트너 온보딩",
+      "title_en": "Business trip to Jakarta — partner onboarding",
+      "title_id": "Perjalanan bisnis ke Jakarta — orientasi mitra",
+      "body_ko": "크리스티안은 식음료 및 섬유 분야의 세 곳의 새로운 잠재 파트너를 만나기 위해 자카르타로 비행했습니다. 이틀 동안 생산적인 회의와 현장 방문이 진행되었습니다.",
+      "body_en": "Christian flew to Jakarta to meet three new potential partners in the food & beverage and textile sectors. Productive meetings and site visits were held over two days.",
+      "body_id": "Christian terbang ke Jakarta untuk bertemu tiga mitra potensial baru di sektor makanan & minuman dan tekstil. Pertemuan produktif dan kunjungan lapangan diadakan selama dua hari."
     },
     {
       "date": "Apr 20, 2026",
       "tag": "field",
-      "title": {
-        "en": "Field check — Palm oil plantation, Kalimantan",
-        "id": "Pemeriksaan lapangan — Perkebunan kelapa sawit, Kalimantan",
-        "ko": "현장 점검 — 칼리만탄 팜유 농장"
-      },
-      "desc": {
-        "en": "We conducted a field inspection of a palm oil plantation in Kalimantan on behalf of a Korean food company. We checked sustainability certifications, logistics access, and output volumes.",
-        "id": "Kami melakukan inspeksi lapangan perkebunan kelapa sawit di Kalimantan atas nama perusahaan makanan Korea. Kami memeriksa sertifikasi keberlanjutan, akses logistik, dan volume produksi.",
-        "ko": "한국 식품 회사를 대신하여 칼리만탄의 팜유 농장을 현장 점검했습니다. 지속 가능성 인증, 물류 접근성 및 생산량을 확인했습니다."
-      },
-      "img": "",
       "emoji": "🌴",
-      "youtube": ""
+      "title_ko": "현장 점검 — 칼리만탄 팜유 농장",
+      "title_en": "Field check — Palm oil plantation, Kalimantan",
+      "title_id": "Pemeriksaan lapangan — Perkebunan kelapa sawit, Kalimantan",
+      "body_ko": "한국 식품 회사를 대신하여 칼리만탄의 팜유 농장을 현장 점검했습니다. 지속 가능성 인증, 물류 접근성 및 생산량을 확인했습니다.",
+      "body_en": "We conducted a field inspection of a palm oil plantation in Kalimantan on behalf of a Korean food company. We checked sustainability certifications, logistics access, and output volumes.",
+      "body_id": "Kami melakukan inspeksi lapangan perkebunan kelapa sawit di Kalimantan atas nama perusahaan makanan Korea. Kami memeriksa sertifikasi keberlanjutan, akses logistik, dan volume produksi."
     },
     {
       "date": "Apr 15, 2026",
       "tag": "networking",
-      "title": {
-        "en": "Korea–Indonesia Trade Forum, Seoul",
-        "id": "Forum Perdagangan Korea–Indonesia, Seoul",
-        "ko": "한-인니 무역 포럼, 서울"
-      },
-      "desc": {
-        "en": "Sangci Company participated in the Korea–Indonesia Trade Forum hosted in Seoul. We connected with government trade officials, logistics partners, and B2B companies exploring bilateral opportunities.",
-        "id": "Sangci Company berpartisipasi dalam Forum Perdagangan Korea–Indonesia yang diadakan di Seoul. Kami terhubung dengan pejabat perdagangan pemerintah, mitra logistik, dan perusahaan B2B yang mengeksplorasi peluang bilateral.",
-        "ko": "상치컴퍼니는 서울에서 열린 한-인니 무역 포럼에 참가했습니다. 정부 무역 관계자, 물류 파트너, 그리고 양국 간의 기회를 모색하는 B2B 기업들과 네트워크를 형성했습니다."
-      },
-      "img": "",
       "emoji": "🤝",
-      "youtube": ""
+      "title_ko": "한-인니 무역 포럼, 서울",
+      "title_en": "Korea–Indonesia Trade Forum, Seoul",
+      "title_id": "Forum Perdagangan Korea–Indonesia, Seoul",
+      "body_ko": "상치컴퍼니는 서울에서 열린 한-인니 무역 포럼에 참가했습니다. 정부 무역 관계자, 물류 파트너, 그리고 양국 간의 기회를 모색하는 B2B 기업들과 네트워크를 형성했습니다.",
+      "body_en": "Sangci Company participated in the Korea–Indonesia Trade Forum hosted in Seoul. We connected with government trade officials, logistics partners, and B2B companies exploring bilateral opportunities.",
+      "body_id": "Sangci Company berpartisipasi dalam Forum Perdagangan Korea–Indonesia yang diadakan di Seoul. Kami terhubung dengan pejabat perdagangan pemerintah, mitra logistik, dan perusahaan B2B yang mengeksplorasi peluang bilateral."
     }
   ]
 }

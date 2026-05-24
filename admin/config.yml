@@ -30,13 +30,15 @@ show_preview_links: false
 collections:
   # ─────────────────────────────────────────────────────────────
   # JOURNAL — data/journal.json  (newest entry at the top)
+  # Blog-style form: Korean is required, English/Bahasa are optional
+  # (empty = falls back to Korean on those pages).
   # ─────────────────────────────────────────────────────────────
   - name: journal
     label: "비즈니스 저널"
     label_singular: "저널 글"
     files:
       - name: journal_file
-        label: "저널 전체 (newest first — 새 글은 맨 위로 드래그)"
+        label: "저널 전체 (새 글은 맨 위로 드래그)"
         file: "data/journal.json"
         format: "json"
         fields:
@@ -46,33 +48,55 @@ collections:
             widget: list
             summary: "{{fields.date}} · {{fields.title.ko}}"
             fields:
-              - { name: date,  label: "날짜 (예: May 8, 2026)", widget: string }
+              - name: date
+                label: "날짜"
+                widget: datetime
+                date_format: "MMM D, YYYY"
+                time_format: false
+                format: "MMM D, YYYY"
+                picker_utc: false
               - name: tag
                 label: "분류"
                 widget: select
                 options:
-                  - { label: "회의 (meeting)",      value: meeting }
-                  - { label: "현장 점검 (field)",    value: field }
-                  - { label: "공장 방문 (factory)",  value: factory }
-                  - { label: "출장 (travel)",       value: travel }
-                  - { label: "네트워킹 (networking)", value: networking }
-              - name: title
-                label: "제목"
-                widget: object
-                fields:
-                  - { name: en, label: "English", widget: string }
-                  - { name: id, label: "Bahasa",  widget: string }
-                  - { name: ko, label: "한국어",   widget: string }
-              - name: desc
-                label: "내용"
-                widget: object
-                fields:
-                  - { name: en, label: "English", widget: text }
-                  - { name: id, label: "Bahasa",  widget: text }
-                  - { name: ko, label: "한국어",   widget: text }
-              - { name: img,     label: "이미지 (URL, 비우면 이모지로 대체)", widget: string, required: false, default: "" }
-              - { name: emoji,   label: "이모지 fallback",                    widget: string, required: false, default: "" }
-              - { name: youtube, label: "YouTube embed URL (선택)",            widget: string, required: false, default: "" }
+                  - { label: "🤝 회의 (meeting)",       value: meeting }
+                  - { label: "🌴 현장 점검 (field)",     value: field }
+                  - { label: "🏭 공장 방문 (factory)",   value: factory }
+                  - { label: "✈️  출장 (travel)",        value: travel }
+                  - { label: "🎤 네트워킹 (networking)", value: networking }
+              - { name: emoji, label: "썸네일 이모지 (카드 그리드에 표시)", widget: string, default: "📝", hint: "예: 🤝 🏭 ✈️ 🌴 🎤" }
+
+              # ─── 한국어 (필수) ─────────────────────────────
+              - { name: title_ko, label: "제목 (한국어 — 필수)", widget: string }
+              - name: body_ko
+                label: "본문 (한국어 — 필수)"
+                widget: markdown
+                hint: "사진·동영상·링크 본문 안에 자유롭게 삽입. 상단 툴바의 이미지 버튼으로 업로드 가능."
+                modes: ["rich_text", "raw"]
+                buttons: [bold, italic, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
+                editor_components: [image, code-block]
+
+              # ─── English (선택) ───────────────────────────
+              - { name: title_en, label: "Title (English — 선택, 비우면 한국어 표시)", widget: string, required: false, default: "" }
+              - name: body_en
+                label: "Body (English — 선택, 비우면 한국어 표시)"
+                widget: markdown
+                required: false
+                default: ""
+                modes: ["rich_text", "raw"]
+                buttons: [bold, italic, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
+                editor_components: [image, code-block]
+
+              # ─── Bahasa Indonesia (선택) ──────────────────
+              - { name: title_id, label: "Judul (Bahasa — 선택, 비우면 한국어 표시)", widget: string, required: false, default: "" }
+              - name: body_id
+                label: "Isi (Bahasa — 선택, 비우면 한국어 표시)"
+                widget: markdown
+                required: false
+                default: ""
+                modes: ["rich_text", "raw"]
+                buttons: [bold, italic, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
+                editor_components: [image, code-block]
 
   # ─────────────────────────────────────────────────────────────
   # PRODUCTS — data/products.json

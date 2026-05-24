@@ -1205,10 +1205,32 @@
     }
 
     .vlog-hero {
-      background: var(--navy-dark);
+      background: #2b1810;
       padding: 5rem 4rem 4rem;
       position: relative;
       overflow: hidden;
+    }
+
+    .vlog-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, #2b1810 25%, rgba(43, 24, 16, 0.55) 55%, rgba(43, 24, 16, 0) 100%),
+        url('assets/journal_hero.png') 100% center / cover no-repeat;
+      opacity: 0.6;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @media (max-width: 991px) {
+      .vlog-hero::before {
+        background: linear-gradient(180deg, #2b1810 35%, rgba(43, 24, 16, 0.75) 70%, rgba(43, 24, 16, 0.3) 100%),
+          url('assets/journal_hero.png') center center / cover no-repeat;
+        opacity: 0.55;
+      }
     }
 
     .vlog-hero-content {
@@ -1500,6 +1522,73 @@
       line-height: 2;
       margin-bottom: 1.5rem;
     }
+
+    /* Rendered markdown body inside the journal modal. */
+    .vlog-modal-prose {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+    body.lang-ko .vlog-modal-prose {
+      font-family: var(--sans-kr);
+      line-height: 1.85;
+    }
+    .vlog-modal-prose p { margin: 0 0 1em; }
+    .vlog-modal-prose h1,
+    .vlog-modal-prose h2,
+    .vlog-modal-prose h3 {
+      font-family: var(--serif);
+      color: var(--navy);
+      font-weight: 500;
+      margin: 1.5em 0 0.5em;
+      line-height: 1.25;
+    }
+    body.lang-ko .vlog-modal-prose h1,
+    body.lang-ko .vlog-modal-prose h2,
+    body.lang-ko .vlog-modal-prose h3 { font-family: var(--sans-kr); }
+    .vlog-modal-prose h2 { font-size: 1.4rem; }
+    .vlog-modal-prose h3 { font-size: 1.15rem; }
+    .vlog-modal-prose img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 1.2em 0;
+      display: block;
+    }
+    .vlog-modal-prose a {
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .vlog-modal-prose a:hover { color: var(--gold-light); }
+    .vlog-modal-prose ul,
+    .vlog-modal-prose ol { margin: 0 0 1em 1.5em; padding: 0; }
+    .vlog-modal-prose li { margin: 0.2em 0; }
+    .vlog-modal-prose blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 0.2em 0 0.2em 1em;
+      margin: 1em 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .vlog-modal-prose code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: rgba(0,0,0,0.05);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+    .vlog-modal-prose pre {
+      background: #f6f6f6;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1em 0;
+    }
+    .vlog-modal-prose pre code { background: transparent; padding: 0; }
 
     .vlog-modal-video {
       width: 100%;
