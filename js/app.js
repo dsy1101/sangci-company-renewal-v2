@@ -471,10 +471,19 @@
         descEl.textContent = body || '';
       }
 
-      // The body owns its own images/videos now — header just shows the
-      // entry's emoji as a thumbnail. Legacy media/video slots stay empty.
-      document.getElementById('modal-media').innerHTML = v.emoji
-        ? `<div class="vlog-modal-img-placeholder">${v.emoji}</div>` : '';
+      // Instagram-style header: if the entry has a thumbnail, show it
+      // (image or video). No thumbnail → no top block (avoids the empty
+      // navy emoji panel that looks wrong in a content view).
+      const url = v.thumbnail_url || '';
+      const kind = vlogMediaKind(url);
+      const mediaEl = document.getElementById('modal-media');
+      if (kind === 'video') {
+        mediaEl.innerHTML = `<video class="vlog-modal-media" src="${url}" autoplay muted loop playsinline controls></video>`;
+      } else if (kind === 'image') {
+        mediaEl.innerHTML = `<img class="vlog-modal-media" src="${url}" alt="">`;
+      } else {
+        mediaEl.innerHTML = '';
+      }
       document.getElementById('modal-video').innerHTML = '';
 
       document.getElementById('vlog-modal').classList.add('open');

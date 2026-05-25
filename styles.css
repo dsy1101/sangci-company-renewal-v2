@@ -1521,14 +1521,14 @@
       display: block;
     }
 
-    .vlog-modal-img-placeholder {
+    /* Instagram-style modal hero: full image visible, capped at 65vh,
+       letterboxed on black for off-aspect photos and any video. */
+    .vlog-modal-media {
+      display: block;
       width: 100%;
-      height: 320px;
-      background: linear-gradient(135deg, var(--navy-dark), var(--navy));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
+      max-height: 65vh;
+      object-fit: contain;
+      background: #000;
     }
 
     .vlog-modal-body {
