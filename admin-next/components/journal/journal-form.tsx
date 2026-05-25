@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { RichEditor } from '@/components/editor/rich-editor';
+import { MediaPicker } from '@/components/editor/media-picker';
 import { toast } from 'sonner';
 import { Loader2, Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -42,6 +43,7 @@ export function JournalForm({ mode, initial, id }: JournalFormProps) {
   const [date, setDate] = useState(initial?.date ?? todayLabel());
   const [tag, setTag] = useState<Tag>((initial?.tag as Tag) ?? 'meeting');
   const [emoji, setEmoji] = useState(initial?.emoji ?? TAGS.find((t) => t.value === 'meeting')?.emoji ?? '📝');
+  const [thumbnailUrl, setThumbnailUrl] = useState(initial?.thumbnail_url ?? '');
   const [titleKo, setTitleKo] = useState(initial?.title_ko ?? '');
   const [titleEn, setTitleEn] = useState(initial?.title_en ?? '');
   const [titleId, setTitleId] = useState(initial?.title_id ?? '');
@@ -77,6 +79,7 @@ export function JournalForm({ mode, initial, id }: JournalFormProps) {
       date: date.trim(),
       tag,
       emoji: emoji || '📝',
+      thumbnail_url: thumbnailUrl.trim(),
       title_ko: titleKo.trim(),
       title_en: titleEn.trim(),
       title_id: titleId.trim(),
@@ -160,7 +163,7 @@ export function JournalForm({ mode, initial, id }: JournalFormProps) {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="emoji">썸네일 이모지</Label>
+              <Label htmlFor="emoji">예비 이모지</Label>
               <Input
                 id="emoji"
                 value={emoji}
@@ -169,6 +172,22 @@ export function JournalForm({ mode, initial, id }: JournalFormProps) {
               />
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base">대표 미디어 (인스타그램 썸네일)</CardTitle>
+          <p className="text-xs text-muted-foreground mt-1">
+            홈페이지 저널 그리드에 정사각 카드로 표시됩니다. 사진이면 정지 이미지, 영상이면 자동 재생되는 무음 영상. 비워두면 위의 이모지로 대체됩니다.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <MediaPicker
+            value={thumbnailUrl}
+            onChange={setThumbnailUrl}
+            folder="journal/thumbs"
+          />
         </CardContent>
       </Card>
 

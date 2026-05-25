@@ -24,7 +24,7 @@ let coffeeClones = [];
 async function loadData() {
   const [journalRes, seriesRes, cultivarsRes] = await Promise.all([
     sb.from('journal')
-      .select('id, date, tag, emoji, title_ko, title_en, title_id, body_ko, body_en, body_id')
+      .select('id, date, tag, emoji, thumbnail_url, title_ko, title_en, title_id, body_ko, body_en, body_id')
       .order('sort_order', { ascending: false }),
     sb.from('product_series')
       .select('series_id, title_ko, title_en, title_id, desc_ko, desc_en, desc_id, items:product_items(image, detail_img, name_ko, name_en, name_id, tags_ko, tags_en, tags_id, desc_ko, desc_en, desc_id, sort_order)')

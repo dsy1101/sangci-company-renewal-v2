@@ -16,6 +16,7 @@ export interface JournalRow {
   date: string;          // "May 8, 2026"
   tag: Tag;
   emoji: string | null;
+  thumbnail_url: string; // image OR video URL; empty = use emoji
   title_ko: string;
   title_en: string;
   title_id: string;
@@ -25,6 +26,18 @@ export interface JournalRow {
   sort_order: number;
   created_at: string;
   updated_at: string;
+}
+
+// File-extension sniff. Anything explicitly video → 'video', else 'image'.
+// Empty URL returns 'none' so the caller can render a fallback.
+export type MediaKind = 'image' | 'video' | 'none';
+export function mediaKindOf(url: string | null | undefined): MediaKind {
+  if (!url) return 'none';
+  const m = url.toLowerCase().match(/\.([a-z0-9]+)(?:\?|#|$)/);
+  if (!m) return 'image';
+  const ext = m[1];
+  if (['mp4', 'mov', 'webm', 'ogv', 'ogg', 'm4v'].includes(ext)) return 'video';
+  return 'image';
 }
 
 export interface ProductSeriesRow {

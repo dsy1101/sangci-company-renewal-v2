@@ -390,6 +390,28 @@
       if (v1 && String(v1).trim()) return v1;
       return v[base + '_ko'] || '';
     }
+    // File-extension sniff. Treat known video extensions as video,
+    // everything else as image. Empty URL → 'none' (caller renders fallback).
+    function vlogMediaKind(url) {
+      if (!url) return 'none';
+      const m = String(url).toLowerCase().match(/\.([a-z0-9]+)(?:\?|#|$)/);
+      if (!m) return 'image';
+      return ['mp4', 'mov', 'webm', 'ogv', 'ogg', 'm4v'].includes(m[1]) ? 'video' : 'image';
+    }
+    // Instagram-style square card media slot.
+    // Video plays muted/looping inline; image gets <img>; empty → big emoji.
+    function vlogMediaHtml(v) {
+      const url = v.thumbnail_url || '';
+      const kind = vlogMediaKind(url);
+      if (kind === 'video') {
+        return `<video class="vlog-thumb" src="${url}" autoplay muted loop playsinline preload="metadata"></video>
+                <div class="vlog-video-badge" aria-hidden="true">▶</div>`;
+      }
+      if (kind === 'image') {
+        return `<img class="vlog-thumb" src="${url}" alt="" loading="lazy">`;
+      }
+      return `<div class="vlog-thumb-placeholder">${v.emoji || '📝'}</div>`;
+    }
     // Markdown body → plain text preview for card summaries.
     function vlogPreview(md, limit) {
       if (!md) return '';
@@ -412,19 +434,18 @@
         return;
       }
       const tagLabels = { meeting: T[currentLang].vlog_meeting, field: T[currentLang].vlog_field, factory: T[currentLang].vlog_factory, travel: T[currentLang].vlog_travel, networking: T[currentLang].vlog_networking };
-      grid.innerHTML = filtered.map((v, i) => {
+      grid.innerHTML = filtered.map((v) => {
         const idx = vlogs.indexOf(v);
         const title = vlogField(v, 'title', currentLang);
-        const preview = vlogPreview(vlogField(v, 'body', currentLang), 120);
+        const preview = vlogPreview(vlogField(v, 'body', currentLang), 90);
         const tagLabel = tagLabels[v.tag] || v.tag;
-        const media = `<div class="vlog-thumb-placeholder">${v.emoji || '📝'}</div>`;
         return `<div class="vlog-card" onclick="openModal(${idx})">
-      ${media}
-      <div class="vlog-body">
-        <div class="vlog-meta"><span class="vlog-tag">${tagLabel}</span><span class="vlog-date">${v.date}</span></div>
+      ${vlogMediaHtml(v)}
+      <span class="vlog-tag">${tagLabel}</span>
+      <div class="vlog-overlay">
+        <div class="vlog-date">${v.date}</div>
         <div class="vlog-title">${title}</div>
         <div class="vlog-desc">${preview}</div>
-        <span class="vlog-read">${T[currentLang].vlog_watch || 'Read more'}</span>
       </div>
     </div>`;
       }).join('');
@@ -488,14 +509,15 @@
       grid.innerHTML = recent.map((v) => {
         const idx = vlogs.indexOf(v);
         const title = vlogField(v, 'title', currentLang);
+        const preview = vlogPreview(vlogField(v, 'body', currentLang), 90);
         const tagLabel = tagLabels[v.tag] || v.tag;
-        const media = `<div class="vlog-thumb-placeholder">${v.emoji || '📝'}</div>`;
-        return `<div class="vlog-card glass" onclick="openModal(${idx})">
-      <div style="height:180px; overflow:hidden;">${media}</div>
-      <div class="vlog-body">
-        <div class="vlog-meta"><span class="vlog-tag">${tagLabel}</span><span class="vlog-date">${v.date}</span></div>
-        <div class="vlog-title" style="font-size:1.1rem;">${title}</div>
-        <span class="vlog-read">${T[currentLang].vlog_watch || 'Read more'}</span>
+        return `<div class="vlog-card" onclick="openModal(${idx})">
+      ${vlogMediaHtml(v)}
+      <span class="vlog-tag">${tagLabel}</span>
+      <div class="vlog-overlay">
+        <div class="vlog-date">${v.date}</div>
+        <div class="vlog-title">${title}</div>
+        <div class="vlog-desc">${preview}</div>
       </div>
     </div>`;
       }).join('');

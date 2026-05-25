@@ -1319,116 +1319,157 @@
       border-bottom-color: var(--gold);
     }
 
-    /* Vlog grid */
+    /* ── Vlog grid: Instagram-style square cards ─────────────── */
     .vlog-grid {
       padding: 3rem 4rem 5rem;
       background: var(--white);
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
     }
 
     .vlog-card {
-      border: 1px solid var(--border);
-      background: var(--white);
+      position: relative;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--cream);
       cursor: pointer;
+      border-radius: 4px;
     }
 
-    .vlog-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(26, 36, 103, 0.1);
-    }
-
-    .vlog-thumb {
+    .vlog-card .vlog-media,
+    .vlog-card .vlog-thumb,
+    .vlog-card video {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: 220px;
+      height: 100%;
       object-fit: cover;
       display: block;
-      background: var(--cream);
+      transition: transform 0.5s ease;
+    }
+
+    .vlog-card:hover .vlog-thumb,
+    .vlog-card:hover video {
+      transform: scale(1.05);
     }
 
     .vlog-thumb-placeholder {
-      width: 100%;
-      height: 220px;
-      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 5rem;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
     }
 
-    .vlog-body {
-      padding: 1.5rem;
-    }
-
-    .vlog-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .vlog-tag {
+    /* Top-left tag chip, always visible */
+    .vlog-card .vlog-tag {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 3;
       font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold);
-      background: var(--gold-pale);
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      padding: 0.2rem 0.6rem;
+      color: var(--white);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
     }
 
-    .vlog-date {
-      font-size: 0.7rem;
-      font-weight: 300;
-      color: var(--muted);
-    }
-
-    .vlog-title {
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--navy);
-      line-height: 1.2;
-      margin-bottom: 0.6rem;
-    }
-
-    body.lang-ko .vlog-title {
-      font-family: var(--sans-kr);
-      font-size: 1.05rem;
-    }
-
-    .vlog-desc {
-      font-size: 0.82rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1.25rem;
-    }
-
-    .vlog-read {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--navy);
-      display: inline-flex;
+    /* Video badge (shows ▶ icon on video cards) */
+    .vlog-card .vlog-video-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 3;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      color: var(--white);
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: gap 0.2s;
+      justify-content: center;
+      font-size: 0.7rem;
     }
 
-    .vlog-card:hover .vlog-read {
-      gap: 0.7rem;
+    /* Dark gradient overlay with text — fades in on hover */
+    .vlog-card .vlog-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: var(--white);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 45%, rgba(0, 0, 0, 0) 75%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .vlog-read::after {
-      content: '→';
+    .vlog-card:hover .vlog-overlay {
+      opacity: 1;
+    }
+
+    .vlog-card .vlog-date {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 0.3rem;
+    }
+
+    .vlog-card .vlog-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    body.lang-ko .vlog-card .vlog-title {
+      font-family: var(--sans-kr);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .vlog-card .vlog-desc {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* On touch devices, no real hover — show overlay always */
+    @media (hover: none) {
+      .vlog-card .vlog-overlay { opacity: 1; }
+    }
+
+    /* Home-page mini grid: same card, just constrained to 3 columns */
+    .home-vlog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
     }
 
     /* Vlog modal */
@@ -1789,6 +1830,13 @@
       .bs-categories,
       .vlog-grid {
         padding: 3rem 1.5rem;
+      }
+
+      /* Instagram-style: 2 cols on tablet, 3 stays only on wider screens */
+      .vlog-grid,
+      .home-vlog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
       }
 
       .vlog-filters {

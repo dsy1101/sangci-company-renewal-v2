@@ -9,6 +9,7 @@ export type JournalInput = {
   date: string;
   tag: Tag;
   emoji: string;
+  thumbnail_url: string;
   title_ko: string;
   title_en: string;
   title_id: string;
