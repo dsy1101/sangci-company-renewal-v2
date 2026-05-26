@@ -17,6 +17,7 @@ export type SeriesInput = {
 export type ItemInput = {
   image: string;
   detail_img: string;
+  detail_img2: string;
   name_ko: string;
   name_en: string;
   name_id: string;

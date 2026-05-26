@@ -57,8 +57,9 @@ export interface ProductSeriesRow {
 export interface ProductItemRow {
   id: string;
   series_id: string;
-  image: string;
-  detail_img: string;       // second photo shown in detail modal
+  image: string;            // catalog card thumbnail (not shown in modal)
+  detail_img: string;       // modal main photo (top)
+  detail_img2: string;      // modal sub  photo (bottom)
   name_ko: string;
   name_en: string;
   name_id: string;

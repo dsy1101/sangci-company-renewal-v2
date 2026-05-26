@@ -27,7 +27,7 @@ async function loadData() {
       .select('id, date, tag, emoji, thumbnail_url, title_ko, title_en, title_id, body_ko, body_en, body_id')
       .order('sort_order', { ascending: false }),
     sb.from('product_series')
-      .select('series_id, title_ko, title_en, title_id, desc_ko, desc_en, desc_id, items:product_items(image, detail_img, name_ko, name_en, name_id, tags_ko, tags_en, tags_id, desc_ko, desc_en, desc_id, subtitle_ko, subtitle_en, subtitle_id, detail_desc_ko, detail_desc_en, detail_desc_id, region, process, taste_notes_ko, taste_notes_en, taste_notes_id, fragrance_ko, fragrance_en, fragrance_id, grade, moisture, body, sort_order)')
+      .select('series_id, title_ko, title_en, title_id, desc_ko, desc_en, desc_id, items:product_items(image, detail_img, detail_img2, name_ko, name_en, name_id, tags_ko, tags_en, tags_id, desc_ko, desc_en, desc_id, subtitle_ko, subtitle_en, subtitle_id, detail_desc_ko, detail_desc_en, detail_desc_id, region, process, taste_notes_ko, taste_notes_en, taste_notes_id, fragrance_ko, fragrance_en, fragrance_id, grade, moisture, body, sort_order)')
       .order('sort_order', { ascending: true }),
     fetch('data/cultivars.json', { cache: 'no-cache' }).then(r => r.json()),
   ]);
@@ -49,8 +49,9 @@ async function loadData() {
       .slice()
       .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
       .map((it) => ({
-        image:     it.image,
-        detailImg: it.detail_img || '',
+        image:      it.image,                // catalog card thumbnail
+        detailImg:  it.detail_img  || '',    // modal main (top)
+        detailImg2: it.detail_img2 || '',    // modal sub  (bottom)
         name:  { ko: it.name_ko, en: it.name_en, id: it.name_id },
         tags:  { ko: it.tags_ko || [], en: it.tags_en || [], id: it.tags_id || [] },
         desc:  { ko: it.desc_ko, en: it.desc_en, id: it.desc_id },

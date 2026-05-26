@@ -41,6 +41,7 @@ function emptyItem(): ItemDraft {
     _key: newKey(),
     image: '',
     detail_img: '',
+    detail_img2: '',
     name_ko: '',
     name_en: '',
     name_id: '',
@@ -110,6 +111,7 @@ export function ProductForm({
           _key: newKey(),
           image: it.image ?? '',
           detail_img: it.detail_img ?? '',
+          detail_img2: it.detail_img2 ?? '',
           name_ko: it.name_ko ?? '',
           name_en: it.name_en ?? '',
           name_id: it.name_id ?? '',
@@ -208,6 +210,7 @@ export function ProductForm({
     const cleanItems: ItemInput[] = items.map((it) => ({
       image: it.image.trim(),
       detail_img: it.detail_img.trim(),
+      detail_img2: it.detail_img2.trim(),
       name_ko: it.name_ko.trim(),
       name_en: it.name_en.trim(),
       name_id: it.name_id.trim(),
@@ -433,15 +436,21 @@ function ItemCard({
       <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-3">
           <ImagePicker
-            label="사진 1 — 카드 썸네일 *"
+            label="사진 1 — 카드 썸네일 (목록 페이지) *"
             value={item.image}
             onChange={(v) => onPatch({ image: v })}
             folder="products"
           />
           <ImagePicker
-            label="사진 2 — 상세 모달용 (선택)"
+            label="사진 2 — 상세 모달 상단 (메인, 선택)"
             value={item.detail_img}
             onChange={(v) => onPatch({ detail_img: v })}
+            folder="products"
+          />
+          <ImagePicker
+            label="사진 3 — 상세 모달 하단 (서브, 선택)"
+            value={item.detail_img2}
+            onChange={(v) => onPatch({ detail_img2: v })}
             folder="products"
           />
         </div>
