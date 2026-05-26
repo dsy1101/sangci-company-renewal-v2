@@ -2810,12 +2810,15 @@
       align-items: center;
       overflow-y: auto;
     }
+    /* Both photos sit in identically-sized square boxes so the modal
+       feels balanced regardless of each photo's native aspect ratio. */
     .item-modal-photo {
       display: block;
       width: 100%;
-      max-width: 520px;
-      max-height: 480px;
+      max-width: 560px;
+      aspect-ratio: 1 / 1;
       object-fit: contain;
+      background: var(--white);
     }
     .item-modal-right {
       padding: 4rem 3rem 3rem;
@@ -2827,42 +2830,40 @@
     }
     .item-modal-title {
       font-family: var(--sans);
-      font-size: 1.75rem;
+      font-size: 2.75rem;
       font-weight: 700;
       color: var(--navy);
-      line-height: 1.2;
+      line-height: 1.15;
       margin: 0;
     }
     body.lang-ko .item-modal-title {
       font-family: var(--sans-kr);
-      font-size: 1.5rem;
+      font-size: 2.4rem;
     }
     .item-modal-subtitle {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 1.05rem;
+      font-size: 1.6rem;
       color: var(--gold);
-      line-height: 1.4;
+      line-height: 1.35;
     }
     body.lang-ko .item-modal-subtitle {
       font-family: var(--sans-kr);
       font-style: normal;
-      font-size: 0.9rem;
+      font-size: 1.35rem;
       font-weight: 500;
     }
     .item-modal-desc {
-      font-size: 0.88rem;
+      font-size: 1.15rem;
       font-weight: 300;
       color: var(--muted);
-      line-height: 1.75;
-      max-height: 220px;
-      overflow-y: auto;
+      line-height: 1.8;
       padding-right: 0.25rem;
     }
     .item-modal-spec {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 0.5rem;
+      margin-top: 0.75rem;
     }
     .item-modal-spec tr {
       border-bottom: 1px solid var(--border);
@@ -2872,25 +2873,25 @@
     }
     .item-modal-spec th {
       text-align: left;
-      font-size: 0.7rem;
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.04em;
       color: var(--muted);
-      padding: 0.7rem 0;
+      padding: 1rem 0;
       text-transform: uppercase;
       width: 48%;
     }
     .item-modal-spec td {
-      font-size: 0.82rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: var(--navy);
-      padding: 0.7rem 0;
+      padding: 1rem 0;
       text-align: right;
     }
     .item-body-dots {
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       color: var(--gold);
-      font-size: 0.9rem;
+      font-size: 1.3rem;
     }
     .item-body-dots-off {
       color: var(--border);
@@ -2898,12 +2899,12 @@
     .item-modal-cta {
       margin-top: auto;
       width: 100%;
-      padding: 1.05rem;
+      padding: 1.4rem;
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
       color: var(--white);
       border: 1px solid var(--navy);
       font-family: var(--sans);
-      font-size: 0.78rem;
+      font-size: 1.05rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -2913,13 +2914,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
     body.lang-ko .item-modal-cta {
       font-family: var(--sans-kr);
       text-transform: none;
       letter-spacing: 0;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
     }
     .item-modal-cta:hover {
       background: transparent;
@@ -2952,9 +2953,15 @@
         overflow: visible;
         max-width: none;
       }
-      .item-modal-title { font-size: 1.4rem; }
-      body.lang-ko .item-modal-title { font-size: 1.25rem; }
-      .item-modal-desc { max-height: none; }
+      .item-modal-title { font-size: 1.9rem; }
+      body.lang-ko .item-modal-title { font-size: 1.7rem; }
+      .item-modal-subtitle { font-size: 1.15rem; }
+      body.lang-ko .item-modal-subtitle { font-size: 1.05rem; }
+      .item-modal-desc { font-size: 1rem; max-height: none; }
+      .item-modal-spec th { font-size: 0.85rem; padding: 0.85rem 0; }
+      .item-modal-spec td { font-size: 1rem; padding: 0.85rem 0; }
+      .item-modal-cta { font-size: 0.95rem; padding: 1.1rem; }
+      body.lang-ko .item-modal-cta { font-size: 1.05rem; }
       .item-modal-close { top: 0.75rem; right: 0.75rem; }
     }
 
