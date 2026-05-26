@@ -530,6 +530,26 @@
     </div>`;
       }).join('');
     }
+    // Mobile hamburger nav — toggles the .nav-links list overlay open/closed.
+    function toggleMobileNav() {
+      const links = document.getElementById('nav-links');
+      const btn = document.getElementById('nav-hamburger');
+      const open = !links.classList.contains('open');
+      links.classList.toggle('open', open);
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function closeMobileNav() {
+      const links = document.getElementById('nav-links');
+      const btn = document.getElementById('nav-hamburger');
+      if (!links || !links.classList.contains('open')) return;
+      links.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
     function scrollToAbout() { showPage('home'); setTimeout(() => { document.getElementById('about-section').scrollIntoView({ behavior: 'smooth' }); }, 100); }
     function scrollToContact() { showPage('home'); setTimeout(() => { document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' }); }, 100); }
     function submitForm() {

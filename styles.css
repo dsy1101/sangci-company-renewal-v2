@@ -1760,6 +1760,39 @@
       animation: fadeUp 0.6s ease both 0.8s;
     }
 
+    /* ── Mobile hamburger button (hidden on desktop) ─────────── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      width: 2.6rem;
+      height: 2.6rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 1px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
     @media(max-width:900px) {
       #lang-bar {
         padding: 0.35rem 1.5rem;
@@ -1768,10 +1801,61 @@
       nav {
         padding: 1rem 1.5rem;
         top: 32px;
+        /* Drop backdrop-filter on mobile — it creates a containing block
+           that traps the fixed-positioned .nav-links overlay inside nav. */
+        backdrop-filter: none;
       }
 
-      .nav-links {
+      /* Hide the desktop "Get in touch" pill — Contact lives in the menu */
+      .nav-cta {
         display: none;
+      }
+
+      /* Hamburger trigger shows up here */
+      .nav-hamburger {
+        display: flex;
+      }
+
+      /* Nav links become a full-screen slide-in overlay.
+         Anchored to the viewport (not nav) so the lang-bar above
+         and the rest of the page below are both fully covered. */
+      .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--white);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        padding: 5rem 1.5rem 3rem;
+        margin: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 250;
+      }
+      .nav-links.open {
+        transform: translateX(0);
+      }
+      .nav-links a {
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        display: block;
+      }
+      /* Hamburger needs to sit ABOVE the overlay so it stays clickable */
+      .nav-hamburger {
+        position: relative;
+        z-index: 260;
+      }
+
+      /* Vlog filter strip: don't let Korean text vertically stack inside
+         each chip — make each chip non-shrinkable and scroll horizontally. */
+      .vfilter {
+        white-space: nowrap;
+        flex-shrink: 0;
       }
 
       #hero,

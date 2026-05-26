@@ -165,14 +165,18 @@
     <div class="logo-wrap" onclick="showPage('home')">
       <img src="assets/images/sangci-logo.png" alt="Sangci Company" class="header-logo">
     </div>
-    <ul class="nav-links">
-      <li><a onclick="showPage('home')" id="nav-home" class="active" data-i18n="nav_home">Home</a></li>
-      <li><a onclick="scrollToAbout()" data-i18n="nav_about">About</a></li>
-      <li><a onclick="showPage('seller')" id="nav-seller" data-i18n="nav_sellers">Products</a></li>
-      <li><a onclick="showPage('vlog')" id="nav-vlog" data-i18n="nav_vlog">Business Journal</a></li>
-      <li><a onclick="scrollToContact()" data-i18n="nav_contact">Contact</a></li>
+    <ul class="nav-links" id="nav-links">
+      <li><a onclick="showPage('home'); closeMobileNav();" id="nav-home" class="active" data-i18n="nav_home">Home</a></li>
+      <li><a onclick="scrollToAbout(); closeMobileNav();" data-i18n="nav_about">About</a></li>
+      <li><a onclick="showPage('seller'); closeMobileNav();" id="nav-seller" data-i18n="nav_sellers">Products</a></li>
+      <li><a onclick="showPage('vlog'); closeMobileNav();" id="nav-vlog" data-i18n="nav_vlog">Business Journal</a></li>
+      <li><a onclick="scrollToContact(); closeMobileNav();" data-i18n="nav_contact">Contact</a></li>
     </ul>
     <a class="nav-cta" onclick="scrollToContact()" data-i18n="nav_cta">Get in touch</a>
+    <!-- Mobile hamburger — hidden on desktop via CSS -->
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="menu" aria-expanded="false" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- ══════════ HOME PAGE ══════════ -->
