@@ -2748,7 +2748,9 @@
       box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
     }
 
-    /* ── Product Item Detail Modal (full-screen) ─────────────── */
+    /* ── Product Item Detail Modal (full-screen, single column) ──
+       Like a long product post: header, big photo, body, big photo,
+       spec, CTA — all flowing top-to-bottom in one scroll. */
     .item-modal-overlay {
       display: none;
       position: fixed;
@@ -2766,12 +2768,10 @@
       width: 100vw;
       height: 100vh;
       border-radius: 0;
-      overflow: hidden;
+      overflow-y: auto;
       position: relative;
       box-shadow: none;
       animation: modalZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
-      display: flex;
-      flex-direction: column;
     }
     .item-modal-close {
       position: fixed;
@@ -2795,41 +2795,34 @@
       transform: rotate(90deg);
       background: var(--navy);
     }
-    .item-modal-grid {
-      display: grid;
-      grid-template-columns: minmax(380px, 1fr) minmax(420px, 1fr);
-      height: 100vh;
-      overflow: hidden;
-    }
-    .item-modal-left {
-      background: var(--cream);
-      padding: 1.5rem;
+    /* Single centered column that holds the whole post. */
+    .item-modal-body {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 4.5rem 2.5rem 4rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      align-items: center;
-      justify-content: center;
-      overflow-y: auto;
+      gap: 2.5rem;
+      align-items: stretch;
     }
-    /* Both photos sit in identically-sized square boxes so the modal
-       feels balanced regardless of each photo's native aspect ratio.
-       Size scales with viewport height so two stacked photos comfortably
-       fit on a typical screen without needing the left column to scroll. */
+    .item-modal-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      align-items: center;
+      text-align: center;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    /* Each photo gets its own row, taking the column's full width.
+       Native aspect ratio is preserved — no cropping, no forced square. */
     .item-modal-photo {
       display: block;
       width: 100%;
-      max-width: min(420px, 40vh);
-      aspect-ratio: 1 / 1;
+      max-height: 70vh;
       object-fit: contain;
-      background: var(--white);
-    }
-    .item-modal-right {
-      padding: 4rem 3rem 3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      overflow-y: auto;
-      max-width: 720px;
+      background: var(--cream);
+      border-radius: 8px;
     }
     .item-modal-title {
       font-family: var(--sans);
@@ -2932,35 +2925,18 @@
       box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
     }
 
-    /* Mobile / narrow viewport: one continuous scrollable column.
-       The grid stops being a side-by-side 100vh layout and becomes a
-       normal vertical flow: photos at the top, content below, single
-       page scroll. Close button stays fixed in the corner. */
+    /* Mobile: tighter padding + smaller type, same single-column flow. */
     @media (max-width: 800px) {
-      .item-modal-grid {
-        grid-template-columns: 1fr;
-        height: auto;
-        min-height: 100vh;
-        overflow-y: auto;
+      .item-modal-body {
+        padding: 3.5rem 1.25rem 2.5rem;
+        gap: 1.75rem;
       }
-      .item-modal-left {
-        padding: 1.25rem;
-        gap: 1rem;
-        overflow: visible;
-      }
-      .item-modal-photo {
-        max-height: 60vh;
-      }
-      .item-modal-right {
-        padding: 1.75rem 1.25rem 2rem;
-        overflow: visible;
-        max-width: none;
-      }
+      .item-modal-photo { max-height: 55vh; }
       .item-modal-title { font-size: 1.9rem; }
       body.lang-ko .item-modal-title { font-size: 1.7rem; }
       .item-modal-subtitle { font-size: 1.15rem; }
       body.lang-ko .item-modal-subtitle { font-size: 1.05rem; }
-      .item-modal-desc { font-size: 1rem; max-height: none; }
+      .item-modal-desc { font-size: 1rem; }
       .item-modal-spec th { font-size: 0.85rem; padding: 0.85rem 0; }
       .item-modal-spec td { font-size: 1rem; padding: 0.85rem 0; }
       .item-modal-cta { font-size: 0.95rem; padding: 1.1rem; }

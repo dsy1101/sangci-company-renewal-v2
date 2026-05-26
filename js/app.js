@@ -595,20 +595,17 @@
       const tasteNote = itemLocale(item.tasteNotes, lang);
       const fragrance = itemLocale(item.fragrance, lang);
 
-      // Left column: photo 2 (main, top) + photo 3 (sub, bottom).
-      // The catalog card thumbnail (item.image) is intentionally NOT
-      // shown in the modal — admins manage modal photos separately.
-      const left = `
-        ${item.detailImg  ? `<img class="item-modal-photo" src="${item.detailImg}"  alt="${name}">` : ''}
-        ${item.detailImg2 ? `<img class="item-modal-photo" src="${item.detailImg2}" alt="${name}">` : ''}
-      `;
-
-      // Right column: title, subtitle, description body, spec table, CTA.
+      // Single vertical column. Like a long-form product post:
+      //   header (title + subtitle)
+      //   photo 1 (full width, large)
+      //   body text
+      //   photo 2 (full width, large)
+      //   spec table
+      //   CTA
       const specLabels = lang === 'ko'
         ? { region: '원산지 / Region', process: '가공방식 / Process', taste: '컵노트 / Taste Notes', fragrance: '향미 / Fragrance', grade: '생두 등급 / Grade', moisture: '수분율 / Moisture', body: '바디 / Body' }
         : { region: 'Region', process: 'Process', taste: 'Taste Notes', fragrance: 'Fragrance', grade: 'Grade', moisture: 'Moisture', body: 'Body' };
 
-      // Hide any row whose value is empty.
       const rows = [
         ['region',    item.region,    specLabels.region],
         ['process',   item.process,   specLabels.process],
@@ -626,19 +623,23 @@
       const safeName = name.replace(/'/g, "\\'");
       const safeType = T[lang].seller_opt || 'Seller';
 
-      const right = `
-        <h2 class="item-modal-title">${name}</h2>
-        ${subtitle ? `<div class="item-modal-subtitle">${subtitle}</div>` : ''}
+      document.getElementById('item-modal-body').innerHTML = `
+        <header class="item-modal-header">
+          <h2 class="item-modal-title">${name}</h2>
+          ${subtitle ? `<div class="item-modal-subtitle">${subtitle}</div>` : ''}
+        </header>
+        ${item.detailImg  ? `<img class="item-modal-photo" src="${item.detailImg}"  alt="${name}">` : ''}
         ${detail ? `<div class="item-modal-desc">${detail.replace(/\n/g, '<br>')}</div>` : (shortDesc ? `<div class="item-modal-desc">${shortDesc}</div>` : '')}
+        ${item.detailImg2 ? `<img class="item-modal-photo" src="${item.detailImg2}" alt="${name}">` : ''}
         ${specTable}
         <button class="item-modal-cta" onclick="closeItemModalDirect(); inquireCategory('${safeName}','${safeType}')">
           <span>${ctaText}</span> <span>→</span>
         </button>
       `;
-
-      document.getElementById('item-modal-left').innerHTML = left;
-      document.getElementById('item-modal-right').innerHTML = right;
-      document.getElementById('item-modal').classList.add('open');
+      const overlay = document.getElementById('item-modal');
+      overlay.classList.add('open');
+      const inner = overlay.querySelector('.item-modal');
+      if (inner) inner.scrollTop = 0;
       document.body.style.overflow = 'hidden';
     }
     function closeItemModalDirect() {
