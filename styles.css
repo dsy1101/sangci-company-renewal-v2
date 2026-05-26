@@ -2803,19 +2803,22 @@
     }
     .item-modal-left {
       background: var(--cream);
-      padding: 2.5rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
       align-items: center;
+      justify-content: center;
       overflow-y: auto;
     }
     /* Both photos sit in identically-sized square boxes so the modal
-       feels balanced regardless of each photo's native aspect ratio. */
+       feels balanced regardless of each photo's native aspect ratio.
+       Size scales with viewport height so two stacked photos comfortably
+       fit on a typical screen without needing the left column to scroll. */
     .item-modal-photo {
       display: block;
       width: 100%;
-      max-width: 560px;
+      max-width: min(420px, 40vh);
       aspect-ratio: 1 / 1;
       object-fit: contain;
       background: var(--white);
