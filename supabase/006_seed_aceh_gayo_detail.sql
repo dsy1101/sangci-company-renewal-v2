@@ -4,16 +4,18 @@
 -- Idempotent (re-runnable).
 --
 -- Photo mapping:
---   image      = the label-package photo (card thumbnail in the catalog,
---                also appears as the second/bottom photo in the detail modal)
---   detail_img = the burlap-sack photo (top/main photo in the detail modal)
+--   image      = NOT TOUCHED. The card thumbnail is managed by the
+--                admin (uploaded via the "사진 1" picker → Supabase
+--                Storage URL stored in image). This seed leaves it
+--                alone so future re-runs don't clobber that upload.
+--   detail_img = the burlap-sack photo (top/main photo in the detail
+--                modal). Lives under assets/products-detail/.
 -- Files live under assets/products-detail/ in this repo.
 -- ══════════════════════════════════════════════════════════
 
 -- 1) Arabica Aceh Gayo Natural
 update product_items
 set
-  image          = 'assets/products-detail/아라비카_아체가요_내추럴_2.png',
   detail_img     = 'assets/products-detail/아라비카_아체가요_내추럴_3.png',
   subtitle_ko    = '가요 고원의 깊은 밤, 베리의 풍미',
   subtitle_en    = 'Deep Night of Gayo Highland, Berry Profile',
@@ -32,7 +34,6 @@ where name_ko = '아라비카 아체 가요 내추럴';
 -- 2) Arabica Aceh Gayo Full Washed
 update product_items
 set
-  image          = 'assets/products-detail/아라비카_아체가요_풀워시드_2.png',
   detail_img     = 'assets/products-detail/아라비카_아체가요_풀워시드_3.png',
   subtitle_ko    = '유서 깊은 S 795 품종의 깨끗한 유산',
   subtitle_en    = 'The Clean Heritage of Historic S 795',
@@ -51,7 +52,6 @@ where name_ko = '아라비카 아체 가요 풀워시드';
 -- 3) Arabica Aceh Gayo Semi-Washed
 update product_items
 set
-  image          = 'assets/products-detail/아라비카_아체가요_세미워시드_2.png',
   detail_img     = 'assets/products-detail/아라비카_아체가요_세미워시드_3.png',
   subtitle_ko    = '인도네시아의 영혼, 길링 바사',
   subtitle_en    = 'The Soul of Indonesia, Wet Hulling',
