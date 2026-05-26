@@ -623,14 +623,22 @@
       const safeName = name.replace(/'/g, "\\'");
       const safeType = T[lang].seller_opt || 'Seller';
 
+      // Photos: side-by-side row when both are present, single full-width
+      // when only one is present.
+      const photoCount = (item.detailImg ? 1 : 0) + (item.detailImg2 ? 1 : 0);
+      const photosHtml = photoCount === 0 ? '' : `
+        <div class="item-modal-photos${photoCount === 1 ? ' single' : ''}">
+          ${item.detailImg  ? `<img class="item-modal-photo" src="${item.detailImg}"  alt="${name}">` : ''}
+          ${item.detailImg2 ? `<img class="item-modal-photo" src="${item.detailImg2}" alt="${name}">` : ''}
+        </div>`;
+
       document.getElementById('item-modal-body').innerHTML = `
         <header class="item-modal-header">
           <h2 class="item-modal-title">${name}</h2>
           ${subtitle ? `<div class="item-modal-subtitle">${subtitle}</div>` : ''}
         </header>
-        ${item.detailImg  ? `<img class="item-modal-photo" src="${item.detailImg}"  alt="${name}">` : ''}
+        ${photosHtml}
         ${detail ? `<div class="item-modal-desc">${detail.replace(/\n/g, '<br>')}</div>` : (shortDesc ? `<div class="item-modal-desc">${shortDesc}</div>` : '')}
-        ${item.detailImg2 ? `<img class="item-modal-photo" src="${item.detailImg2}" alt="${name}">` : ''}
         ${specTable}
         <button class="item-modal-cta" onclick="closeItemModalDirect(); inquireCategory('${safeName}','${safeType}')">
           <span>${ctaText}</span> <span>→</span>
