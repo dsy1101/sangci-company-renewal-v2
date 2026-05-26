@@ -595,10 +595,12 @@
       const tasteNote = itemLocale(item.tasteNotes, lang);
       const fragrance = itemLocale(item.fragrance, lang);
 
-      // Left column: photo 1, then photo 2 (if present).
+      // Left column: detail_img is the main/top photo, image is shown
+      // below as the secondary photo (image also doubles as the catalog
+      // card thumbnail, so it makes sense as the supporting shot here).
       const left = `
-        ${item.image ? `<img class="item-modal-photo" src="${item.image}" alt="${name}">` : ''}
         ${item.detailImg ? `<img class="item-modal-photo" src="${item.detailImg}" alt="${name}">` : ''}
+        ${item.image ? `<img class="item-modal-photo" src="${item.image}" alt="${name}">` : ''}
       `;
 
       // Right column: title, subtitle, description body, spec table, CTA.
