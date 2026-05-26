@@ -4,18 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Static, single-page marketing site for **Sangci Company** (Indonesia ↔ Korea trade broker). The site has no build system, no package manager, and no framework — just HTML, CSS, JS, and JSON, served as-is by Vercel.
+Static, single-page marketing site for **Sangci Company** (Indonesia ↔ Korea trade broker). The public site has no build system, no package manager, and no framework — just HTML, CSS, JS, served as-is by Vercel. Journal and product data live in **Supabase Postgres** and are fetched at runtime by `js/data.js`. A separate **Next.js admin app** ([admin-next/](admin-next/)) deployed at `admin.sangcicompany.com` lets the operator manage that content via a form UI.
 
 ## File layout
 
+### Public site (deployed to b2b.sangcicompany.com)
 - [index.html](index.html) — page markup + the EDITING GUIDE comment for the non-developer maintainer
 - [styles.css](styles.css) — all visual styles, including `:root` design tokens
 - [js/i18n.js](js/i18n.js) — `T` object with `en` / `id` / `ko` translations
-- [js/data.js](js/data.js) — `loadData()` that fetches the three JSON files and assigns to `vlogs`, `catData`, `coffeeClones`
+- [js/data.js](js/data.js) — Supabase client + `loadData()` that populates `vlogs`, `catData`, `coffeeClones`
 - [js/app.js](js/app.js) — page switching, renderers, modal handlers, init
-- [data/journal.json](data/journal.json) — Business Journal entries (was `vlogs`)
-- [data/products.json](data/products.json) — Product category series (was `catData`)
-- [data/cultivars.json](data/cultivars.json) — Coffee cultivar catalogue (was `coffeeClones`)
+- [data/cultivars.json](data/cultivars.json) — coffee cultivar catalogue (the only remaining static data file)
+
+### Admin app (deployed to admin.sangcicompany.com)
+- [admin-next/](admin-next/) — Next.js 16 + Supabase Auth + TipTap. Lets the operator CRUD journal entries and product series/items. Read [admin-next/AGENTS.md](admin-next/AGENTS.md) before touching Next.js code (the version has breaking changes from training data).
+
+### Database
+- [supabase/](supabase/) — schema migrations + seed SQL. Run 001 → 002 → 003 → 004 → 005 in order against a fresh project.
 
 ## Running / previewing
 
@@ -53,15 +58,15 @@ No lint, no test suite, no compile step. "Verifying a change" means running a se
 - `setLang` also toggles `body.lang-en` / `body.lang-id` / `body.lang-ko`. Korean has separate font sizing/weight rules throughout `styles.css` (search `body.lang-ko`) because `Noto Sans KR` renders heavier than the Latin serif. **When you add or restyle a heading, add the matching `body.lang-ko` override** or Korean will look wrong.
 - **Catalog filter/modal labels are not in `T`.** `renderCatalog` and `openCatalogModal` in `js/app.js` build their yield / bean-size / mucilage / rust / disease / origin labels with inline `currentLang === 'ko' ? '한국어' : englishValue` ternaries (Indonesian falls through to the English branch). To change those, edit the function — not `i18n.js`. If you ever need real Indonesian labels there, refactor to use `T` rather than extending the ternary.
 
-### 4. Dynamic content — JSON files
+### 4. Dynamic content — Supabase (+ one static JSON)
 
-The three JSON files are the source of truth for content the maintainer (or eventually the admin UI) edits. `js/data.js` is just a loader and should rarely change.
+Journal entries and product series/items live in **Supabase Postgres** (project `viwnjckqtsanuqzjjcen`). `js/data.js` runs three queries in parallel on load:
 
-- **`data/journal.json`** — Business Journal entries. Each item has `date`, `tag`, `title`/`desc` (per-locale `{ en, id, ko }` objects), `img` (URL or `""`), `emoji` (fallback), `youtube` (embed URL or `""`). Newest entry goes at the **top** of the array. Home page shows the first 3 via `renderHomeVlog()`; the Journal page renders all via `renderVlog(filter)` filtered by `tag` (`meeting | field | factory | travel | networking`).
-- **`data/products.json`** — drives the Seller/Products catalog via `renderCategories()` / `renderCatalog()`. Items use the same per-locale shape (`{ en, id, ko }`) for `title`, `desc`, `name`, `tags`.
-- **`data/cultivars.json`** — coffee cultivar catalogue used by the catalog page filter + detail modal.
+- `journal` table → `vlogs` array. Newest first via `sort_order desc`. Schema: `date, tag, emoji, thumbnail_url, title_{ko,en,id}, body_{ko,en,id}`. `thumbnail_url` is an image OR video URL (sniffed by extension); the journal grid renders an `<img>` or autoplaying `<video>` accordingly, falling back to the emoji when empty. Renderers: `renderVlog(filter)` for the Journal page (filtered by `tag` in `meeting | field | factory | travel | networking`); `openModal(idx)` for the per-entry modal.
+- `product_series` + nested `product_items` → `catData` array (PostgREST embed: `items:product_items(...)`). Each item now has three photo slots — `image` (catalog card thumbnail), `detail_img` (modal main/top), `detail_img2` (modal sub/bottom) — plus detail fields `subtitle_{ko,en,id}`, `detail_desc_{ko,en,id}`, `region`, `process`, `taste_notes_{ko,en,id}`, `fragrance_{ko,en,id}`, `grade`, `moisture`, `body` (0–5 dot rating). Empty spec fields hide their row in the detail modal. Renderers: `renderCategories()` for the Seller page grid; `openItemModal(sIdx, iIdx)` for the full-screen single-column detail modal.
+- [data/cultivars.json](data/cultivars.json) → `coffeeClones`. Static file, not in Supabase. Used by `renderCatalog()` + `openCatalogModal()` for the coffee-cultivar catalog UI. Edits must be valid JSON (double-quoted keys, no trailing commas, no comments).
 
-Edits must be **valid JSON**: double-quoted keys, no trailing commas, no JS-style comments.
+**Content edits = use the admin app**, not direct DB writes or static-file commits. The admin handles Storage uploads for photos, three-language tabs, and the spec table form. RLS policies allow anonymous SELECT (so the public site can read) and authenticated INSERT/UPDATE/DELETE (so only signed-in admins can write).
 
 ### 5. Design tokens
 
@@ -73,11 +78,9 @@ Email `sangcikoreaidn@gmail.com` and phone `+82) 10-5613-0731` appear as literal
 
 ## Other files in the repo
 
-- **`incore-website_sample.html`** — an older snapshot used as the input file for Python helper scripts that no longer run. **It is not the live site**; do not edit it expecting changes to show up.
-- **`index.html.bak`, `index.html.pre-split.bak`, `index copy.html`** — gitignored manual backups from prior editing sessions. Ignore unless explicitly asked to diff against a prior version.
-- **`extract-data.mjs`, `verify-split.mjs`, `verify-phase2.mjs`, `verify-shots/`** — gitignored one-shot helper scripts from the JS→JSON split migration. They are not part of the runtime, not used in CI, and safe to ignore. Don't add new "verify" scripts here unless you also un-gitignore them; otherwise they'll quietly disappear on a fresh clone.
-- **`assets/`** — images and the hero `video/hero.mp4`. Reference with relative paths from the project root.
+- **`assets/`** — site images and the hero `video/hero.mp4`. Reference with relative paths from the project root. Product detail photos for the Aceh Gayo series live under `assets/products-detail/`; Mandheling and Kerinci/Robusta photos were uploaded via the admin and live in Supabase Storage (URLs in DB).
 - **`Sangci_Company_소개자료_커피.pdf`** — Korean-language company brochure, reference material only.
+- **`*.bak`, `index copy*.html`, `verify-*.mjs`, `extract-*.mjs`, `verify-shots/`** — all gitignored. Local-only artifacts from past editing sessions / one-shot helpers. Safe to ignore; not part of the runtime.
 
 ## Editing conventions to follow
 

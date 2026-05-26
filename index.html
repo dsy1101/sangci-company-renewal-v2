@@ -17,56 +17,45 @@
 ║                                                                  ║
 ║  FILE STRUCTURE                                                  ║
 ║  ──────────────                                                  ║
-║  index.html         — page markup (this file)                    ║
-║  styles.css         — all visual styles                          ║
-║  js/i18n.js         — translations (T.en / T.id / T.ko)          ║
-║  js/data.js         — async data loader (fetches data/*.json)    ║
-║  js/app.js          — page logic (edit only if you know JS)      ║
-║  data/journal.json  — Business Journal entries                   ║
-║  data/products.json — Product category series                    ║
-║  data/cultivars.json — Coffee cultivar catalogue                 ║
+║  index.html          — page markup (this file)                   ║
+║  styles.css          — all visual styles                         ║
+║  js/i18n.js          — translations (T.en / T.id / T.ko)         ║
+║  js/data.js          — Supabase loader (vlogs + product catalog) ║
+║  js/app.js           — page logic (edit only if you know JS)     ║
+║  data/cultivars.json — Coffee cultivar catalogue (static)        ║
+║  admin-next/         — Next.js admin app (separate Vercel deploy)║
+║                                                                  ║
+║  WHERE THE CONTENT LIVES                                         ║
+║  ───────────────────────                                         ║
+║  Business Journal entries and Product Series + Items are stored  ║
+║  in Supabase Postgres (project: viwnjckqtsanuqzjjcen). Cultivars ║
+║  are still in data/cultivars.json.                               ║
+║                                                                  ║
+║  HOW TO EDIT JOURNAL / PRODUCTS                                  ║
+║  ──────────────────────────────                                  ║
+║  Use the admin app at admin.sangcicompany.com — log in, then     ║
+║  use the "비즈니스 저널" or "제품" menu to add / edit / delete.  ║
+║  Changes appear on the live site within seconds (no rebuild      ║
+║  needed for content).                                            ║
 ║                                                                  ║
 ║  HOW TO PREVIEW LOCALLY                                          ║
 ║  ──────────────────────                                          ║
-║  Data is fetched via JSON now, so opening index.html with        ║
-║  file:// no longer works (browsers block fetch on file://).      ║
-║  Run a server in this folder:                                    ║
+║  Data is fetched at runtime, so file:// won't work. Run:         ║
 ║    python -m http.server 8000                                    ║
 ║  Then open  http://localhost:8000/  in your browser.             ║
-║  (Push to main → Vercel auto-deploys in ~1 min as before.)       ║
+║  (Push to main → Vercel auto-deploys in ~1 min.)                 ║
 ║                                                                  ║
-║  HOW TO EDIT TEXT                                                ║
-║  ─────────────────                                               ║
-║  Open js/i18n.js and find the T object.                          ║
-║  Find the key you want (e.g. hero_title) and change the text.    ║
+║  HOW TO EDIT TEXT (labels, nav, hero, etc.)                      ║
+║  ──────────────────────────────────────────                      ║
+║  Open js/i18n.js and find the T object. Find the key you want    ║
+║  (e.g. hero_title) and change the text in all three locales.     ║
 ║                                                                  ║
-║  HOW TO ADD A JOURNAL POST                                       ║
-║  ─────────────────────────                                       ║
-║  Open data/journal.json and add a new {} entry at the TOP        ║
-║  (newest first). Fields: date, tag, title, desc, img, emoji,     ║
-║  youtube. title and desc are objects with en/id/ko keys.         ║
-║  For img: paste a direct image URL or "". For youtube: full      ║
-║  embed URL or "". Make sure it's valid JSON (no trailing comma   ║
-║  on the last entry, double quotes around keys).                  ║
-║                                                                  ║
-║  HOW TO REMOVE A JOURNAL POST                                    ║
-║  ────────────────────────────                                    ║
-║  Open data/journal.json and delete the entry's { ... } block     ║
-║  (with the trailing comma if not the last entry).                ║
-║                                                                  ║
-║  HOW TO ADD A NEW NAV PAGE                                       ║
-║  ──────────────────────────                                      ║
-║  1. Add a nav link in index.html:                                ║
-║       <li><a onclick="showPage('PAGEID')">...</a></li>           ║
-║  2. Add a page div in index.html:                                ║
-║       <div class="page" id="page-PAGEID">...</div>               ║
-║  3. Add translations in js/i18n.js (T.en / T.id / T.ko)          ║
-║                                                                  ║
-║  HOW TO REMOVE A PAGE                                            ║
-║  ─────────────────────                                           ║
-║  1. Delete the <li> nav link in index.html                       ║
-║  2. Delete the <div class="page" id="page-XXX"> block            ║
-║  3. Remove related keys in js/i18n.js                            ║
+║  HOW TO ADD / REMOVE A NAV PAGE                                  ║
+║  ───────────────────────────────                                 ║
+║  Add:   1) <li> nav link in index.html                           ║
+║         2) <div class="page" id="page-XYZ"> block                ║
+║         3) Translations in js/i18n.js                            ║
+║  Remove: delete the three above.                                 ║
 ║                                                                  ║
 ║  HOW TO EDIT CONTACT INFO                                        ║
 ║  ─────────────────────────                                       ║
