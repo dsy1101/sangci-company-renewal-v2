@@ -562,7 +562,12 @@
     }
     function closeProductDetail() {
       document.getElementById('product-detail-modal').classList.remove('active');
-      document.body.style.overflow = '';
+      // Only re-enable body scroll if no underlying modal is still open
+      // (e.g. the product detail modal often opens the lightbox on top
+      // of itself; closing the lightbox should leave body scroll locked).
+      const itemOpen = document.getElementById('item-modal')?.classList.contains('open');
+      const vlogOpen = document.getElementById('vlog-modal')?.classList.contains('open');
+      if (!itemOpen && !vlogOpen) document.body.style.overflow = '';
       document.getElementById('product-detail-img').src = '';
     }
 
@@ -626,10 +631,12 @@
       // Photos: side-by-side row when both are present, single full-width
       // when only one is present.
       const photoCount = (item.detailImg ? 1 : 0) + (item.detailImg2 ? 1 : 0);
+      const photoTag = (src) =>
+        `<img class="item-modal-photo" src="${src}" alt="${name}" onclick="openProductDetail('${src}')">`;
       const photosHtml = photoCount === 0 ? '' : `
         <div class="item-modal-photos${photoCount === 1 ? ' single' : ''}">
-          ${item.detailImg  ? `<img class="item-modal-photo" src="${item.detailImg}"  alt="${name}">` : ''}
-          ${item.detailImg2 ? `<img class="item-modal-photo" src="${item.detailImg2}" alt="${name}">` : ''}
+          ${item.detailImg  ? photoTag(item.detailImg)  : ''}
+          ${item.detailImg2 ? photoTag(item.detailImg2) : ''}
         </div>`;
 
       document.getElementById('item-modal-body').innerHTML = `
