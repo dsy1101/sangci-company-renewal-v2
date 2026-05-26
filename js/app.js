@@ -42,21 +42,20 @@
           const safeName = name.replace(/'/g, "\\'");
           const safeType = T[currentLang].seller_opt || 'Seller';
 
-          const imageHtml = item.detailImg
-            ? `<div class="card-image-wrap"><img src="${item.image}" alt="${name}" loading="lazy" style="cursor:pointer;" onclick="openProductDetail('${item.detailImg}')"></div>`
-            : `<div class="card-image-wrap"><img src="${item.image}" alt="${name}" loading="lazy"></div>`;
+          // Whole card click → detail modal. Footer click → inquire (stops bubbling).
+          const imageHtml = `<div class="card-image-wrap"><img src="${item.image}" alt="${name}" loading="lazy"></div>`;
           const contentHtml = `<div class="card-content-wrap">
             <div class="card-coffee-title">${name}</div>
             <div class="card-coffee-tags">
               ${tags.map(t => `<span class="card-coffee-tag">${t}</span>`).join('')}
             </div>
             <p class="card-coffee-desc">${itemDesc}</p>
-            <div class="card-coffee-footer" onclick="inquireCategory('${safeName}','${safeType}')">
+            <div class="card-coffee-footer" onclick="event.stopPropagation(); inquireCategory('${safeName}','${safeType}')">
               <span>${T[currentLang].inquire_msg_label || 'Inquire'}</span> <span>→</span>
             </div>
           </div>`;
 
-          return `<div class="series-card fade-in-element">
+          return `<div class="series-card fade-in-element" style="cursor:pointer;" onclick="openItemModal(${sIdx}, ${iIdx})">
             ${imageHtml}
             ${contentHtml}
           </div>`;
@@ -565,5 +564,87 @@
       document.getElementById('product-detail-modal').classList.remove('active');
       document.body.style.overflow = '';
       document.getElementById('product-detail-img').src = '';
+    }
+
+    // ══════════════════════════════════════════════
+    // PRODUCT ITEM DETAIL MODAL  (rich detail page in modal form)
+    // ══════════════════════════════════════════════
+    // Pick a localized field; fall back to KO, then EN, then ''.
+    function itemLocale(obj, lang) {
+      if (!obj) return '';
+      return obj[lang] || obj.ko || obj.en || '';
+    }
+    // Build the "Body" intensity row as filled/empty dots (●●●○○).
+    function bodyDots(n) {
+      const v = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
+      return '<span class="item-body-dots">'
+        + '●'.repeat(v) + '<span class="item-body-dots-off">' + '○'.repeat(5 - v) + '</span>'
+        + '</span>';
+    }
+    function openItemModal(seriesIdx, itemIdx) {
+      const series = catData[seriesIdx];
+      if (!series) return;
+      const item = series.items[itemIdx];
+      if (!item) return;
+      const lang = currentLang;
+
+      const name      = itemLocale(item.name, lang);
+      const subtitle  = itemLocale(item.subtitle, lang);
+      const detail    = itemLocale(item.detailDesc, lang);
+      const shortDesc = itemLocale(item.desc, lang);
+      const tasteNote = itemLocale(item.tasteNotes, lang);
+      const fragrance = itemLocale(item.fragrance, lang);
+
+      // Left column: photo 1, then photo 2 (if present).
+      const left = `
+        ${item.image ? `<img class="item-modal-photo" src="${item.image}" alt="${name}">` : ''}
+        ${item.detailImg ? `<img class="item-modal-photo" src="${item.detailImg}" alt="${name}">` : ''}
+      `;
+
+      // Right column: title, subtitle, description body, spec table, CTA.
+      const specLabels = lang === 'ko'
+        ? { region: '원산지 / Region', process: '가공방식 / Process', taste: '컵노트 / Taste Notes', fragrance: '향미 / Fragrance', grade: '생두 등급 / Grade', moisture: '수분율 / Moisture', body: '바디 / Body' }
+        : { region: 'Region', process: 'Process', taste: 'Taste Notes', fragrance: 'Fragrance', grade: 'Grade', moisture: 'Moisture', body: 'Body' };
+
+      // Hide any row whose value is empty.
+      const rows = [
+        ['region',    item.region,    specLabels.region],
+        ['process',   item.process,   specLabels.process],
+        ['taste',     tasteNote,      specLabels.taste],
+        ['fragrance', fragrance,      specLabels.fragrance],
+        ['grade',     item.grade,     specLabels.grade],
+        ['moisture',  item.moisture,  specLabels.moisture],
+      ].filter(([, v]) => v && String(v).trim());
+      const bodyRow = (item.body > 0) ? `<tr><th>${specLabels.body}</th><td>${bodyDots(item.body)}</td></tr>` : '';
+      const specTable = (rows.length || bodyRow)
+        ? `<table class="item-modal-spec">${rows.map(([, v, label]) => `<tr><th>${label}</th><td>${v}</td></tr>`).join('')}${bodyRow}</table>`
+        : '';
+
+      const ctaText = lang === 'ko' ? '이 제품 문의하기' : (lang === 'id' ? 'Tanyakan produk ini' : 'Inquire about this product');
+      const safeName = name.replace(/'/g, "\\'");
+      const safeType = T[lang].seller_opt || 'Seller';
+
+      const right = `
+        <h2 class="item-modal-title">${name}</h2>
+        ${subtitle ? `<div class="item-modal-subtitle">${subtitle}</div>` : ''}
+        ${detail ? `<div class="item-modal-desc">${detail.replace(/\n/g, '<br>')}</div>` : (shortDesc ? `<div class="item-modal-desc">${shortDesc}</div>` : '')}
+        ${specTable}
+        <button class="item-modal-cta" onclick="closeItemModalDirect(); inquireCategory('${safeName}','${safeType}')">
+          <span>${ctaText}</span> <span>→</span>
+        </button>
+      `;
+
+      document.getElementById('item-modal-left').innerHTML = left;
+      document.getElementById('item-modal-right').innerHTML = right;
+      document.getElementById('item-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeItemModalDirect() {
+      const m = document.getElementById('item-modal');
+      if (m) m.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeItemModal(e) {
+      if (e.target.id === 'item-modal') closeItemModalDirect();
     }
 

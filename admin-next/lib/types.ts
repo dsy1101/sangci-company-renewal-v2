@@ -58,16 +58,34 @@ export interface ProductItemRow {
   id: string;
   series_id: string;
   image: string;
-  detail_img: string;
+  detail_img: string;       // second photo shown in detail modal
   name_ko: string;
   name_en: string;
   name_id: string;
   tags_ko: string[];
   tags_en: string[];
   tags_id: string[];
-  desc_ko: string;
+  desc_ko: string;          // short blurb on the catalog card
   desc_en: string;
   desc_id: string;
+  // Detail-modal fields (all optional — row hides if empty)
+  subtitle_ko: string;
+  subtitle_en: string;
+  subtitle_id: string;
+  detail_desc_ko: string;   // long body for the detail modal
+  detail_desc_en: string;
+  detail_desc_id: string;
+  region: string;           // single value (e.g. "Mt. Kerinci")
+  process: string;          // single value (e.g. "Natural")
+  taste_notes_ko: string;
+  taste_notes_en: string;
+  taste_notes_id: string;
+  fragrance_ko: string;
+  fragrance_en: string;
+  fragrance_id: string;
+  grade: string;            // e.g. "Mix 15-18"
+  moisture: string;         // e.g. "13% - 14%"
+  body: number;             // 0–5 dot rating
   sort_order: number;
   created_at: string;
   updated_at: string;

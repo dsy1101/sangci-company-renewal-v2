@@ -498,11 +498,22 @@
   <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
 
-  <!-- Product Detail Image Modal -->
+  <!-- Product Detail Image Modal (legacy "big image" popup, kept for compat) -->
   <div class="img-modal-overlay" id="product-detail-modal" onclick="closeProductDetail()">
     <div class="img-modal-content" onclick="event.stopPropagation()">
       <button class="img-modal-close" onclick="closeProductDetail()">&times;</button>
       <img id="product-detail-img" src="" alt="Product Detail">
+    </div>
+  </div>
+
+  <!-- Product Item Detail Modal -->
+  <div class="item-modal-overlay" id="item-modal" onclick="closeItemModal(event)">
+    <div class="item-modal" onclick="event.stopPropagation()">
+      <button class="item-modal-close" onclick="closeItemModalDirect()" aria-label="닫기">✕</button>
+      <div class="item-modal-grid">
+        <div class="item-modal-left" id="item-modal-left"></div>
+        <div class="item-modal-right" id="item-modal-right"></div>
+      </div>
     </div>
   </div>
 

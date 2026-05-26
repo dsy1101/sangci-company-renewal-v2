@@ -50,6 +50,23 @@ function emptyItem(): ItemDraft {
     desc_ko: '',
     desc_en: '',
     desc_id: '',
+    subtitle_ko: '',
+    subtitle_en: '',
+    subtitle_id: '',
+    detail_desc_ko: '',
+    detail_desc_en: '',
+    detail_desc_id: '',
+    region: '',
+    process: '',
+    taste_notes_ko: '',
+    taste_notes_en: '',
+    taste_notes_id: '',
+    fragrance_ko: '',
+    fragrance_en: '',
+    fragrance_id: '',
+    grade: '',
+    moisture: '',
+    body: 0,
   };
 }
 
@@ -102,6 +119,23 @@ export function ProductForm({
           desc_ko: it.desc_ko ?? '',
           desc_en: it.desc_en ?? '',
           desc_id: it.desc_id ?? '',
+          subtitle_ko: it.subtitle_ko ?? '',
+          subtitle_en: it.subtitle_en ?? '',
+          subtitle_id: it.subtitle_id ?? '',
+          detail_desc_ko: it.detail_desc_ko ?? '',
+          detail_desc_en: it.detail_desc_en ?? '',
+          detail_desc_id: it.detail_desc_id ?? '',
+          region: it.region ?? '',
+          process: it.process ?? '',
+          taste_notes_ko: it.taste_notes_ko ?? '',
+          taste_notes_en: it.taste_notes_en ?? '',
+          taste_notes_id: it.taste_notes_id ?? '',
+          fragrance_ko: it.fragrance_ko ?? '',
+          fragrance_en: it.fragrance_en ?? '',
+          fragrance_id: it.fragrance_id ?? '',
+          grade: it.grade ?? '',
+          moisture: it.moisture ?? '',
+          body: it.body ?? 0,
         }));
     }
     return [emptyItem()];
@@ -183,6 +217,23 @@ export function ProductForm({
       desc_ko: it.desc_ko.trim(),
       desc_en: it.desc_en.trim(),
       desc_id: it.desc_id.trim(),
+      subtitle_ko: it.subtitle_ko.trim(),
+      subtitle_en: it.subtitle_en.trim(),
+      subtitle_id: it.subtitle_id.trim(),
+      detail_desc_ko: it.detail_desc_ko.trim(),
+      detail_desc_en: it.detail_desc_en.trim(),
+      detail_desc_id: it.detail_desc_id.trim(),
+      region: it.region.trim(),
+      process: it.process.trim(),
+      taste_notes_ko: it.taste_notes_ko.trim(),
+      taste_notes_en: it.taste_notes_en.trim(),
+      taste_notes_id: it.taste_notes_id.trim(),
+      fragrance_ko: it.fragrance_ko.trim(),
+      fragrance_en: it.fragrance_en.trim(),
+      fragrance_id: it.fragrance_id.trim(),
+      grade: it.grade.trim(),
+      moisture: it.moisture.trim(),
+      body: Math.max(0, Math.min(5, Number(it.body) || 0)),
     }));
 
     startTransition(async () => {
@@ -382,13 +433,13 @@ function ItemCard({
       <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-3">
           <ImagePicker
-            label="대표 이미지 *"
+            label="사진 1 — 카드 썸네일 *"
             value={item.image}
             onChange={(v) => onPatch({ image: v })}
             folder="products"
           />
           <ImagePicker
-            label="상세 이미지 (클릭 시 팝업, 선택)"
+            label="사진 2 — 상세 모달용 (선택)"
             value={item.detail_img}
             onChange={(v) => onPatch({ detail_img: v })}
             folder="products"
@@ -449,6 +500,168 @@ function ItemCard({
           </Tabs>
         </div>
       </div>
+
+      {/* DETAIL PAGE INFO — shown in the public-site product detail modal */}
+      <details className="border-t">
+        <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium hover:bg-accent/20 select-none">
+          상세 페이지 정보 (모달용 — 클릭해서 펼치기)
+        </summary>
+        <div className="p-4 space-y-4">
+          <Tabs defaultValue="ko">
+            <TabsList>
+              <TabsTrigger value="ko">한국어</TabsTrigger>
+              <TabsTrigger value="en">English</TabsTrigger>
+              <TabsTrigger value="id">Bahasa</TabsTrigger>
+            </TabsList>
+            <TabsContent value="ko" className="space-y-3 mt-3">
+              <div className="space-y-1.5">
+                <Label>부제</Label>
+                <Input
+                  value={item.subtitle_ko}
+                  onChange={(e) => onPatch({ subtitle_ko: e.target.value })}
+                  placeholder="예: 화산이 선물한 다채로운 과즙미"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label>상세 설명 (긴 본문)</Label>
+                <Textarea
+                  rows={6}
+                  value={item.detail_desc_ko}
+                  onChange={(e) => onPatch({ detail_desc_ko: e.target.value })}
+                  placeholder="상세 모달에 표시되는 긴 설명…"
+                />
+              </div>
+            </TabsContent>
+            <TabsContent value="en" className="space-y-3 mt-3">
+              <div className="space-y-1.5">
+                <Label>Subtitle</Label>
+                <Input
+                  value={item.subtitle_en}
+                  onChange={(e) => onPatch({ subtitle_en: e.target.value })}
+                  placeholder="e.g. The Volcanic Juicy Brightness"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label>Detail description</Label>
+                <Textarea
+                  rows={6}
+                  value={item.detail_desc_en}
+                  onChange={(e) => onPatch({ detail_desc_en: e.target.value })}
+                  placeholder="(비우면 한국어 본문이 표시됨)"
+                />
+              </div>
+            </TabsContent>
+            <TabsContent value="id" className="space-y-3 mt-3">
+              <div className="space-y-1.5">
+                <Label>Subjudul</Label>
+                <Input
+                  value={item.subtitle_id}
+                  onChange={(e) => onPatch({ subtitle_id: e.target.value })}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label>Deskripsi detail</Label>
+                <Textarea
+                  rows={6}
+                  value={item.detail_desc_id}
+                  onChange={(e) => onPatch({ detail_desc_id: e.target.value })}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          <div className="rounded-md border bg-muted/30 p-3 space-y-3">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              Technical Specification (비워두면 모달에서 그 줄은 숨김)
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs">Region (원산지)</Label>
+                <Input
+                  value={item.region}
+                  onChange={(e) => onPatch({ region: e.target.value })}
+                  placeholder="예: Mt. Kerinci"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Process (가공방식)</Label>
+                <Input
+                  value={item.process}
+                  onChange={(e) => onPatch({ process: e.target.value })}
+                  placeholder="예: Natural"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Taste Notes 한국어 (컵노트)</Label>
+                <Input
+                  value={item.taste_notes_ko}
+                  onChange={(e) => onPatch({ taste_notes_ko: e.target.value })}
+                  placeholder="예: 시트러스, 딸기, 복숭아, 망고"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Taste Notes English</Label>
+                <Input
+                  value={item.taste_notes_en}
+                  onChange={(e) => onPatch({ taste_notes_en: e.target.value })}
+                  placeholder="e.g. Citrus - Strawberry - Peach - Mango"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Fragrance 한국어 (향미)</Label>
+                <Input
+                  value={item.fragrance_ko}
+                  onChange={(e) => onPatch({ fragrance_ko: e.target.value })}
+                  placeholder="예: 과일향, 신선한 꽃향"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Fragrance English</Label>
+                <Input
+                  value={item.fragrance_en}
+                  onChange={(e) => onPatch({ fragrance_en: e.target.value })}
+                  placeholder="e.g. Fruity, fresh floral"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Grade (생두 등급)</Label>
+                <Input
+                  value={item.grade}
+                  onChange={(e) => onPatch({ grade: e.target.value })}
+                  placeholder="예: Mix 15-18"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Moisture % (수분율)</Label>
+                <Input
+                  value={item.moisture}
+                  onChange={(e) => onPatch({ moisture: e.target.value })}
+                  placeholder="예: 13% - 14%"
+                />
+              </div>
+              <div className="space-y-1.5 sm:col-span-2">
+                <Label className="text-xs">Body (바디 강도, 0–5)</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="range"
+                    min={0}
+                    max={5}
+                    step={1}
+                    value={item.body}
+                    onChange={(e) => onPatch({ body: parseInt(e.target.value, 10) || 0 })}
+                    className="flex-1"
+                  />
+                  <span className="text-sm font-mono w-8 text-center">{item.body}</span>
+                  <span className="text-base tracking-tighter select-none">
+                    {'●'.repeat(item.body)}
+                    <span className="text-muted-foreground/40">{'○'.repeat(5 - item.body)}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
     </div>
   );
 }

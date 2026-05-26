@@ -26,6 +26,24 @@ export type ItemInput = {
   desc_ko: string;
   desc_en: string;
   desc_id: string;
+  // Detail modal fields
+  subtitle_ko: string;
+  subtitle_en: string;
+  subtitle_id: string;
+  detail_desc_ko: string;
+  detail_desc_en: string;
+  detail_desc_id: string;
+  region: string;
+  process: string;
+  taste_notes_ko: string;
+  taste_notes_en: string;
+  taste_notes_id: string;
+  fragrance_ko: string;
+  fragrance_en: string;
+  fragrance_id: string;
+  grade: string;
+  moisture: string;
+  body: number;
 };
 
 /**
